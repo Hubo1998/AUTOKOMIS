@@ -30,9 +30,9 @@ public class Generate {
         boolean engine=trueorFalse();
         boolean body=trueorFalse();
         boolean gearbox=trueorFalse();
-        Segment segment=genSegment(x);
+        Car.Segment segment=genSegment(x);
         double value=genPrice(segment,yearOfProduction,brakes,suspension,engine,body,gearbox);
-        return new Car(producers[x],models[genModel(x)],yearOfProduction,segment,value,brakes,suspension,engine,body,gearbox);
+        return new Car(producers[x],models[genModel(x)],yearOfProduction,segment,value,new Components(brakes,suspension,engine,body,gearbox));
     }
 
     public static boolean trueorFalse(){
@@ -102,37 +102,37 @@ public class Generate {
         //System.out.println(y);
         return y;
     }
-    public static Segment genSegment(Integer random){
+    public static Car.Segment genSegment(Integer random){
         switch (random) {
             case 0, 7, 10, 12, 13, 14, 16, 18, 19, 20, 22, 24, 26, 28, 30, 33, 35, 36, 37, 39, 40 -> {
-                return Segment.Standard;
+                return Car.Segment.Standard;
             }
             case 1, 2, 3, 6, 8, 9, 21, 23, 25, 27, 29, 32, 34, 38, 41, 42, 44, 45, 46 -> {
-                return Segment.Premium;
+                return Car.Segment.Premium;
             }
             case 4, 5, 11, 15, 17, 31, 43 -> {
-                return Segment.Budget;
+                return Car.Segment.Budget;
             }
             default -> {
-                return Segment.NA;
+                return Car.Segment.NA;
             }
         }
     }
-    public static Double genPrice(Segment segment, Integer yearOfprod,boolean brakes,boolean suspension, boolean engine,boolean body,boolean gearbox ){
+    public static Double genPrice(Car.Segment segment, Integer yearOfprod, boolean brakes, boolean suspension, boolean engine, boolean body, boolean gearbox ){
         Random rand=new Random();
         double price=5000.0;
         int multiplier=yearOfprod-DEFAULT_YEAR_STARER+1;
         double finalPrice;
         double costs=0.0;
-        if (segment==Segment.Premium){
+        if (segment== Car.Segment.Premium){
             //z racji segmentu premium mnożnik między 1.85-2.15
             double randomizer=rand.nextInt(30)+185;
             price*=(randomizer/100)*multiplier;
-        } else if (segment==Segment.Standard){
+        } else if (segment== Car.Segment.Standard){
             //z racji segmentu standard mnożnik między 0.9-1.1
             double randomizer=rand.nextInt(20)+90;
             price*=(randomizer/100)*multiplier;
-        } else if (segment==Segment.Budget){
+        } else if (segment== Car.Segment.Budget){
             //z racji segmentu standard mnożnik między 0.5-0.65
             double randomizer=rand.nextInt(15)+50;
             price*=(randomizer/100)*multiplier;
