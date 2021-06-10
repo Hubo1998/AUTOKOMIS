@@ -35,5 +35,10 @@ public class Main {
 	System.out.println(Generate.baseOfCars);
 	Generate.viewCarBase();
 	System.out.println(Generate.baseOfCars.get(1).model);
+	Generate.buyCar(Generate.baseOfCars.get(2),Player.player1);
+	Generate.viewCarBase();
+	System.out.println(Player.player1.playerGarage);
+	Player.player1.checkPlayerGarage();
+	Player.player1.checkCash();
     }
 }

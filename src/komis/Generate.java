@@ -161,4 +161,22 @@ public class Generate {
         finalPrice=price-costs;
         return finalPrice;
     }
+    public static void buyCar(Car car,Player player){
+        if(player.cash>car.price){
+            for (int i=0;i<baseOfCars.size();i++){
+                if(baseOfCars.get(i)==car){
+                    System.out.println("Kupiłeś "+baseOfCars.get(i).producer+" "+baseOfCars.get(i).model);
+                    Car carholder=baseOfCars.get(i);
+                    removeCar(i);
+                    player.playerGarage.add(carholder);
+                    player.cash-=car.price;
+                }
+            }
+        }
+    }
+    public static void removeCar(int indexOfCar){
+        baseOfCars.remove(indexOfCar);
+        baseOfCars.add(generateVehicle());
+    }
+
 }

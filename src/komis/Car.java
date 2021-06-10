@@ -142,5 +142,7 @@ public class Car extends Components {
             default -> System.out.println("Brak podanego komponentu");
         }
     }
-}
+
+    }
+
 

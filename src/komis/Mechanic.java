@@ -1,9 +1,5 @@
 package komis;
 
-import java.util.Random;
-
-import static komis.Components.DEFAULT_GEARBOX_VALUE;
-
 public class Mechanic {
     public Integer price;
     public Integer guarantee;
