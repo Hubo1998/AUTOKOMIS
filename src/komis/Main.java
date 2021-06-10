@@ -5,7 +5,7 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-	Car car1=new Car("Subaru","Impreza",1998,"Premium",999.0,true,true,true,false,false);
+	Car car1=new Car("Subaru","Impreza",1998,Segment.Premium,999.0,true,true,true,false,false);
 	System.out.println(car1.brakesAreOk);
 	System.out.println(car1.suspensionIsOk);
 	System.out.println(car1.bodyIsOk);
@@ -29,5 +29,7 @@ public class Main {
 	Car car122=Generate.generateVehicle();
 	System.out.println(car122.yearOfProduction+car122.model+car122.producer);
 	car122.repair("brakes",Mechanic.Janusz,Player.player1);
+	System.out.println(car122.price);
+	System.out.println(car122.yearOfProduction);
     }
 }

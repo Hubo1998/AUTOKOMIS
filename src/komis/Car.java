@@ -8,15 +8,15 @@ public class Car extends Components {
     final public String model;
     final public String producer;
     final public Integer yearOfProduction;
-    final public String carSegment;
+    final public Segment segment;
     Random rand = new Random();
 
-    public Car(String producer, String model, Integer yearOfProduction, String carSegment, Double price, boolean brakesAreOk, boolean suspensionIsOk, boolean engineIsOk, boolean bodyIsOk, boolean gearboxIsOk) {
+    public Car(String producer, String model, Integer yearOfProduction, Segment segment, Double price, boolean brakesAreOk, boolean suspensionIsOk, boolean engineIsOk, boolean bodyIsOk, boolean gearboxIsOk) {
         super(brakesAreOk, suspensionIsOk, engineIsOk, bodyIsOk, gearboxIsOk);
         this.producer = producer;
         this.model = model;
         this.yearOfProduction = yearOfProduction;
-        this.carSegment = carSegment;
+        this.segment = segment;
         this.price = price;
         this.finalPrice = price;
     }
@@ -45,7 +45,7 @@ public class Car extends Components {
                     }
                 } else if (player.cash - (price * DEFAULT_BRAKES_VALUE) * (priceRandomized / 100) > 0) {
                     player.cash -= (price * DEFAULT_BRAKES_VALUE) * (priceRandomized / 100);
-                    finalPrice = finalPrice + (price * DEFAULT_BRAKES_VALUE) * (priceRandomized / 100);
+                    finalPrice += (price * DEFAULT_BRAKES_VALUE);
                     brakesAreOk = true;
                     System.out.println("Hamulce naprawione, cena za usługę:" + (price * DEFAULT_BRAKES_VALUE) * (priceRandomized / 100));
                 }else{
@@ -66,7 +66,7 @@ public class Car extends Components {
                     }
                 } else if (player.cash - (price * DEFAULT_SUSPENSION_VALUE) * (priceRandomized / 100) > 0) {
                     player.cash -= (price * DEFAULT_SUSPENSION_VALUE) * (priceRandomized / 100);
-                    finalPrice = finalPrice + (price * DEFAULT_SUSPENSION_VALUE) * (priceRandomized / 100);
+                    finalPrice += (price * DEFAULT_SUSPENSION_VALUE);
                     suspensionIsOk = true;
                     System.out.println("Zawieszenie naprawione, cena za usługę:" + (price * DEFAULT_SUSPENSION_VALUE) * (priceRandomized / 100));
                 }else{
@@ -87,7 +87,7 @@ public class Car extends Components {
                     }
                 } else if (player.cash - (price * DEFAULT_ENGINE_VALUE) * (priceRandomized / 100) > 0) {
                     player.cash -= (price * DEFAULT_ENGINE_VALUE) * (priceRandomized / 100);
-                    finalPrice = finalPrice + (price * DEFAULT_ENGINE_VALUE) * (priceRandomized / 100);
+                    finalPrice += (price * DEFAULT_ENGINE_VALUE);
                     engineIsOk = true;
                     System.out.println("Silnik naprawiont, cena za usługę:" + (price * DEFAULT_ENGINE_VALUE) * (priceRandomized / 100));
                 }else{
@@ -108,7 +108,7 @@ public class Car extends Components {
                     }
                 } else if (player.cash - (price * DEFAULT_BODY_VALUE) * (priceRandomized / 100) > 0) {
                     player.cash -= (price * DEFAULT_BODY_VALUE) * (priceRandomized / 100);
-                    finalPrice = finalPrice + (price * DEFAULT_BODY_VALUE) * (priceRandomized / 100);
+                    finalPrice += (price * DEFAULT_BODY_VALUE);
                     bodyIsOk = true;
                     System.out.println("Karoseria naprawiona, cena za usługę:" + (price * DEFAULT_BODY_VALUE) * (priceRandomized / 100));
                 }else{
@@ -129,7 +129,7 @@ public class Car extends Components {
                     }
                 } else if (player.cash - (price * DEFAULT_GEARBOX_VALUE) * (priceRandomized / 100) > 0) {
                     player.cash -= (price * DEFAULT_GEARBOX_VALUE) * (priceRandomized / 100);
-                    finalPrice = finalPrice + (price * DEFAULT_GEARBOX_VALUE) * (priceRandomized / 100);
+                    finalPrice += (price * DEFAULT_GEARBOX_VALUE);
                     gearboxIsOk = true;
                     System.out.println("Skrzynia biegów naprawiona, cena za usługę:" + (price * DEFAULT_GEARBOX_VALUE) * (priceRandomized / 100));
                 }else{

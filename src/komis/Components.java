@@ -20,6 +20,7 @@ public abstract class Components {
         this.bodyIsOk = bodyIsOk;
         this.gearboxIsOk = gearboxIsOk;
     }
+
     public abstract void repair(String part, Mechanic steve,Player player);
     public void breakSomething(Integer number){
         switch (number){
