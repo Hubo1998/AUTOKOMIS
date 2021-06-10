@@ -31,5 +31,9 @@ public class Main {
 	car122.repair("brakes",Mechanic.Janusz,Player.player1);
 	System.out.println(car122.price);
 	System.out.println(car122.yearOfProduction);
+	Generate.createCarBase();
+	System.out.println(Generate.baseOfCars);
+	Generate.viewCarBase();
+	System.out.println(Generate.baseOfCars.get(1).model);
     }
 }

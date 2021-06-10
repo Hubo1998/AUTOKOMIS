@@ -20,7 +20,10 @@ public class Car extends Components {
         this.price = price;
         this.finalPrice = price;
     }
-
+    @Override
+    public String toString(){
+        return producer+" "+model+" "+yearOfProduction+" rok za "+Math.round(price);
+    }
     @Override
     public void repair(String part, Mechanic steve, Player player) {
         double priceRandomized = rand.nextInt(11) + steve.price;
