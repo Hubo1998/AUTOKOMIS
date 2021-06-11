@@ -30,7 +30,7 @@ public class Car extends Components {
 
     @Override
     public String toString() {
-        return producer + " " + model + " " + yearOfProduction + " rok za " + Math.round(price);
+        return producer + " " + model + " " + yearOfProduction + " rok za " + Math.round(finalPrice);
     }
 
     //@Override

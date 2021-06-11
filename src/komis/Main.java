@@ -1,6 +1,6 @@
 package komis;
 
-import java.util.Random;
+
 
 public class Main {
 
@@ -44,8 +44,10 @@ public class Main {
 	Player.player1.playerGarage.get(0).repair(Components.Comps.brakes,Mechanic.Adrian,Player.player1);
 	Player.player1.playerGarage.get(0).carPartsStatus();
 	System.out.println(Player.player1.playerGarage.get(0).gearboxvalue);*/
-    Generate.createCarBase();
+    Generate generate=new Generate();
+    generate.createCarBase();
 	Menu menu=new Menu();
+	menu.createCarBase();
 	//menu.showFirstPage();
 	while (true){
 	    if(!menu.showFirstPage()){

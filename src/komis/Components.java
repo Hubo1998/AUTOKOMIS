@@ -52,15 +52,15 @@ public class Components {
     }
     public void setService(Comps comps){
         if (comps==Comps.brakes){
-            brakesAreOk=true;
+            this.brakesAreOk=true;
         }else if(comps==Comps.suspension){
-            suspensionIsOk=true;
+            this.suspensionIsOk=true;
         }else if(comps==Comps.engine){
-            engineIsOk=true;
+            this.engineIsOk=true;
         }else if(comps==Comps.body){
-            bodyIsOk=true;
+            this.bodyIsOk=true;
         }else if(comps==Comps.gearbox){
-            gearboxIsOk=true;
+            this.gearboxIsOk=true;
         }
     }
     public boolean isCompOk(Comps comps){
