@@ -5,7 +5,7 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-	Car car1=new Car("Subaru","Impreza",1998, Car.Segment.Premium,999.0,new Components(true,true,false,false,false));
+	/*Car car1=new Car("Subaru","Impreza",1998, Car.Segment.Premium,999.0,new Components(true,true,false,false,false));
 	System.out.println(car1.brakesAreOk);
 	System.out.println(car1.suspensionIsOk);
 	System.out.println(car1.bodyIsOk);
@@ -43,6 +43,12 @@ public class Main {
 	Player.player1.playerGarage.get(0).carPartsStatus();
 	Player.player1.playerGarage.get(0).repair(Components.Comps.brakes,Mechanic.Adrian,Player.player1);
 	Player.player1.playerGarage.get(0).carPartsStatus();
-	System.out.println(Player.player1.playerGarage.get(0).gearboxvalue);
+	System.out.println(Player.player1.playerGarage.get(0).gearboxvalue);*/
+    Generate.createCarBase();
+	Menu menu=new Menu();
+	//menu.showFirstPage();
+	while (true){
+	    menu.showFirstPage();
+    }
     }
 }

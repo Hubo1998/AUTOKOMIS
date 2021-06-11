@@ -10,6 +10,7 @@ public class Car extends Components {
     public Double price;
     public Double finalPrice;
     Random rand = new Random();
+
     public enum Segment {
         Premium,
         Standard,
@@ -61,7 +62,7 @@ public class Car extends Components {
             System.out.println("Nie stać Cię");
         }
     }
-public void carPartsStatus(){
+    public void carPartsStatus(){
         if(brakesAreOk) System.out.println("Hamulce OK");
         else System.out.println("Hamulce NIE OK");
         if(suspensionIsOk) System.out.println("Zawieszenie OK");
@@ -73,6 +74,7 @@ public void carPartsStatus(){
         if(gearboxIsOk) System.out.println("Skrzynia biegów OK");
         else System.out.println("Skrzynia biegów NIE OK");
         }
+
 }
 
 
