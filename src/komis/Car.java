@@ -19,7 +19,7 @@ public class Car extends Components {
     }
 
     public Car(String producer, String model, Integer yearOfProduction, Segment segment, Double price, Components components) {
-        super(components);
+        super(components.brakesAreOk, components.suspensionIsOk, components.engineIsOk, components.bodyIsOk, components.gearboxIsOk);
         this.producer = producer;
         this.model = model;
         this.yearOfProduction = yearOfProduction;
@@ -63,16 +63,17 @@ public class Car extends Components {
         }
     }
     public void carPartsStatus(){
-        if(brakesAreOk) System.out.println("Hamulce OK");
-        else System.out.println("Hamulce NIE OK");
-        if(suspensionIsOk) System.out.println("Zawieszenie OK");
-        else System.out.println("Zawieszenie NIE OK");
-        if(engineIsOk) System.out.println("Silnik OK");
-        else System.out.println("Silnik NIE OK");
-        if(bodyIsOk) System.out.println("Karoseria OK");
-        else System.out.println("Karoseria NIE OK");
-        if(gearboxIsOk) System.out.println("Skrzynia biegów OK");
-        else System.out.println("Skrzynia biegów NIE OK");
+        if(brakesAreOk) System.out.println("1. Hamulce OK");
+        else System.out.println("1. Hamulce NIE OK");
+        if(suspensionIsOk) System.out.println("2. Zawieszenie OK");
+        else System.out.println("2. Zawieszenie NIE OK");
+        if(engineIsOk) System.out.println("3. Silnik OK");
+        else System.out.println("3. Silnik NIE OK");
+        if(bodyIsOk) System.out.println("4. Karoseria OK");
+        else System.out.println("4. Karoseria NIE OK");
+        if(gearboxIsOk) System.out.println("5. Skrzynia biegów OK");
+        else System.out.println("5. Skrzynia biegów NIE OK");
+        //Generate.baseOfCars.get(1).brakesAreOk;
         }
 
 }

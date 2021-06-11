@@ -39,7 +39,7 @@ public class Generate {
         //80% szans, że podzespół będzie sprawny.
         Random rand=new Random();
         int x=rand.nextInt(101);
-        return x > 80;
+        return x < 80;
     }
     public static Integer genProducer(){
         Random rand=new Random();

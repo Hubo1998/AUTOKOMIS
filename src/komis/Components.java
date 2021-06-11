@@ -30,8 +30,6 @@ public class Components {
         this.gearboxIsOk = gearboxIsOk;
     }
 
-    public Components(Components components) {
-    }
     public double valueOf(Comps comps){
         if (comps==Comps.brakes){
             brakesvalue=DEFAULT_BRAKES_VALUE;

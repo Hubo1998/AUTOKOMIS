@@ -48,7 +48,9 @@ public class Main {
 	Menu menu=new Menu();
 	//menu.showFirstPage();
 	while (true){
-	    menu.showFirstPage();
+	    if(!menu.showFirstPage()){
+	        break;
+        }
     }
     }
 }
