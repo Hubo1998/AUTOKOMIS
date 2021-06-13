@@ -1,5 +1,7 @@
 package komis;
 
+import java.util.Random;
+
 public class Components {
     public boolean brakesAreOk;
     public double brakesvalue;
@@ -79,14 +81,61 @@ public class Components {
         }
     }
 
-    public void breakSomething(Integer number){
-        switch (number){
-            case 0 -> brakesAreOk=false;
-            case 1 -> suspensionIsOk=false;
-            case 2 -> engineIsOk=false;
-            case 3 -> bodyIsOk=false;
-            case 4 -> gearboxIsOk=false;
-            default -> System.out.println("Coś poszło nie tak");
+    public int breakSomething(Integer number){
+        Random rand=new Random();
+        int x=rand.nextInt();
+        if(!brakesAreOk&!suspensionIsOk&!engineIsOk&!bodyIsOk&!gearboxIsOk) {
+            System.out.println("No już nie ma co psuć :/");
+        }else{
+            switch (number) {
+                case 0 -> {
+                    if (brakesAreOk) {
+                        brakesAreOk = false;
+                        return 0;
+                    } else breakSomething(x);
+                }
+                case 1 -> {
+                    if (suspensionIsOk) {
+                        suspensionIsOk = false;
+                        return 1;
+                    } else breakSomething(x);
+                }
+                case 2 -> {
+                    if (engineIsOk) {
+                        engineIsOk = false;
+                        return 2;
+                    } else breakSomething(x);
+                }
+                case 3 -> {
+                    if (bodyIsOk) {
+                        bodyIsOk = false;
+                        return 3;
+                    } else breakSomething(x);
+                }
+                case 4 -> {
+                    if (gearboxIsOk) {
+                        gearboxIsOk = false;
+                        return 4;
+                    } else breakSomething(x);
+                }
+                default -> System.out.println("Coś poszło nie tak");
+            }
+        }
+        return 0;
+    }
+    public String nameOfComp(Comps comps){
+        if (comps==Comps.brakes){
+            return "Hamulce";
+        }else if(comps==Comps.suspension){
+            return "Zawieszenie";
+        }else if(comps==Comps.engine){
+            return "Silnik";
+        }else if(comps==Comps.body){
+            return "Karoseria";
+        }else if(comps==Comps.gearbox){
+            return "Skrzynia biegów";
+        }else{
+            return "Coś nie tak";
         }
     }
 }

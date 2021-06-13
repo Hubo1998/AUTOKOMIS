@@ -1,5 +1,6 @@
 package komis;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Menu {
@@ -21,11 +22,12 @@ public class Menu {
                 break;
             }
             case "3": {
-                System.out.println("Baza potencjalnych klientów");
+                System.out.println("Baza potencjalnych klientów:");
+                generate.viewBaseOfClients();
                 break;
             }
             case "4": {
-                System.out.println("Kup reklamę");
+                buyAdvertisement(Player.player1);
                 break;
             }
             case "5": {
@@ -65,7 +67,7 @@ public class Menu {
     public void checkGarageStatus(Player player){
         System.out.println("To są Twoje samochody:");
         player.checkPlayerGarage();
-        System.out.println("1. Menu\n2. Sprawdź stan auta\n3. Napraw auto\n4. Sprzedaj auto");
+        System.out.println("Menu:\n1. Menu\n2. Sprawdź stan auta\n3. Napraw auto\n4. Sprzedaj auto");
         String inputcheckgarage=scanner.nextLine();
         switch (inputcheckgarage){
             case "1"->showFirstPage();
@@ -95,13 +97,22 @@ public class Menu {
                     }
                 }
             }
+            case "4"->{
+                System.out.println("Które auto chciałbyś sprzedać?");
+                String inputcartosell=scanner.nextLine();
+                System.out.println(player.playerGarage.get(Integer.parseInt(inputcartosell)-1).producer+" "+player.playerGarage.get(Integer.parseInt(inputcartosell)-1).model);
+                System.out.println("Komu chciałbyś sprzedać auto?");
+                generate.viewBaseOfClients();
+                String inputclienttosell=scanner.nextLine();
+                generate.sellCar(Integer.parseInt(inputcartosell),Player.player1,generate.baseOfClients.get(Integer.parseInt(inputclienttosell)-1));
+            }
         }
     }
     public void Mechanicchoice(Components.Comps comps,Integer cartorepair){
         System.out.println("U którego mechanika chciałbyś naprawić auto?");
-        System.out.println(comps+" cena u Janusza (100% gwarancji, że się uda, 0% szans na zepsucie czegoś innego cena między "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Janusz.price*0.01)+" - "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Janusz.price+10))*0.01);
-        System.out.println(comps+" cena u Mariana (90% gwarancji, że się uda, 0% szans na zepsucie czegoś innego cena między "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Marian.price*0.01)+" - "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Marian.price+10))*0.01);
-        System.out.println(comps+" cena u Adriana (80% gwarancji, że się uda, 2% szans na zepsucie czegoś innego cena między "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Adrian.price*0.01)+" - "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Adrian.price+10))*0.01);
+        System.out.println(Player.player1.playerGarage.get(cartorepair).nameOfComp(comps)+" cena u Janusza (100% gwarancji, że się uda, 0% szans na zepsucie czegoś innego cena między "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Janusz.price*0.01)+" - "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Janusz.price+10)*0.01));
+        System.out.println(Player.player1.playerGarage.get(cartorepair).nameOfComp(comps)+" cena u Mariana (90% gwarancji, że się uda, 0% szans na zepsucie czegoś innego cena między "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Marian.price*0.01)+" - "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Marian.price+10)*0.01));
+        System.out.println(Player.player1.playerGarage.get(cartorepair).nameOfComp(comps)+" cena u Adriana (80% gwarancji, że się uda, 2% szans na zepsucie czegoś innego cena między "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Adrian.price*0.01)+" - "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Adrian.price+10)*0.01));
         System.out.println("Przemyśl to dobrze, jak się nie uda, trzeba będzie jechać do Janusza");
         String inputmechanicchoice=scanner.nextLine();
         switch(inputmechanicchoice){
@@ -115,10 +126,33 @@ public class Menu {
         }
     }
     public void repairTime(Mechanic steve, Components.Comps comps,Car car,Player player){
-        System.out.println("Naprawiłeś "+car.producer+" "+car.model);
+        System.out.println(car.producer+" "+car.model+" u Mechanika");
         car.repair(comps,steve,player);
-        System.out.println(car.model+" "+car.producer);
+        System.out.println(car.producer+" "+car.model);
         car.carPartsStatus();
         System.out.println("Aktualny status podzespołów");
+    }
+    public void buyAdvertisement(Player player){
+        System.out.println("Wybierz reklamę którą chcesz kupić:\n1. Reklama w gazecie\n2. Reklama w internecie");
+        String inputAdvertisementchoice=scanner.nextLine();
+        Random rand=new Random();
+        int counter=0;
+        int newspaperprice=1000;
+        int internetprice=250;
+        switch(inputAdvertisementchoice){
+            case "1"->{
+                player.cash-=newspaperprice;
+                for (int i=0;i<rand.nextInt(5);i++) {
+                    generate.generateClient();
+                    counter+=1;
+                }
+                System.out.println("Zapłaciłeś: "+newspaperprice+"\nPrzybyło "+counter+" nowych klientów");
+            }
+            case "2"->{
+                player.cash-=internetprice;
+                generate.generateClient();
+                System.out.println("Zapłaciłeś: "+internetprice+"\nPrzybył jeden nowy klient");
+            }
+        }
     }
 }

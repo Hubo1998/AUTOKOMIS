@@ -45,9 +45,11 @@ public class Main {
 	Player.player1.playerGarage.get(0).carPartsStatus();
 	System.out.println(Player.player1.playerGarage.get(0).gearboxvalue);*/
     Generate generate=new Generate();
-    generate.createCarBase();
+    //generate.createCarBase();
+    //generate.createBaseOfClients();
 	Menu menu=new Menu();
 	menu.createCarBase();
+	menu.generate.createBaseOfClients();
 	//menu.showFirstPage();
 	while (true){
 	    if(!menu.showFirstPage()){

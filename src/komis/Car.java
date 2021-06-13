@@ -37,6 +37,8 @@ public class Car extends Components {
     public void repair(Comps comps, Mechanic steve, Player player) {
         double priceRandomized = rand.nextInt(11) + steve.price;
         double priceRandomizedextra = rand.nextInt(11) + Mechanic.Janusz.price;
+        int halfOfmechanicprice= (int) Math.round(((price * valueOf(comps)) * (priceRandomized / 100)) / 2);
+        int januszprice= (int) Math.round((price * valueOf(comps))*(priceRandomizedextra/100));
         int chanceOfSuccess = rand.nextInt(101);
         int chanceOfBroke = rand.nextInt(101);
         int thingBroken = rand.nextInt(5);
@@ -45,13 +47,15 @@ public class Car extends Components {
         } else if (chanceOfSuccess >= steve.guarantee) {
             //w zadaniu nie jest opisane, czy przy niepowodzeniu naprawy ma być pobierana opłata,
             //założyłem, że będzie pobierana połowa kwoty naprawy, która by się zakończyła powodzeniem.
-            System.out.println("Niestety Twój mechanik nie podołał, jedynym ratunkiem jest Janusz\njednemu musisz zapłacić połowę stawki a dodatkowo Januszowi");
-            player.cash -= ((price * valueOf(comps)) * (priceRandomized / 100)) / 2;
-            player.cash -= (price * valueOf(comps)) * (priceRandomizedextra / 100);
+            System.out.println("Niestety Twój mechanik nie podołał, jedynym ratunkiem jest Janusz\njednemu musisz zapłacić połowę stawki:"+halfOfmechanicprice+" a dodatkowo Januszowi:"+januszprice);
+            player.cash -= halfOfmechanicprice;
+            player.cash -= januszprice;
+            setService(comps);
+            finalPrice+=(price*valueOf(comps));
             if (chanceOfBroke <= steve.brokelse) {
                 System.out.println("Jakby tego było mało, Twój mechanik zepsuł coś jeszcze, trzeba będzie to naprawić :S");
-                breakSomething(thingBroken);
-                System.out.println("Zepsuto:" + LISTofComponents[thingBroken]);
+                int x=breakSomething(thingBroken);
+                System.out.println("Zepsuto:" + LISTofComponents[x]);
             }
         } else if (player.cash - (price * valueOf(comps)) * (priceRandomized / 100) > 0) {
             player.cash -= (price * valueOf(comps)) * (priceRandomized / 100);
@@ -73,7 +77,6 @@ public class Car extends Components {
         else System.out.println("4. Karoseria NIE OK");
         if(gearboxIsOk) System.out.println("5. Skrzynia biegów OK");
         else System.out.println("5. Skrzynia biegów NIE OK");
-        //Generate.baseOfCars.get(1).brakesAreOk;
         }
 
 }
