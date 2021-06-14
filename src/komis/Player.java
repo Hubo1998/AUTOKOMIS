@@ -7,11 +7,13 @@ public class Player {
     public String lastName;
     public Double cash;
     public ArrayList<Car> playerGarage= new ArrayList<>();
+    public int counter;
 
     public Player(String firstName,String lastName,Double cash){
         this.firstName=firstName;
         this.lastName=lastName;
         this.cash=cash;
+        this.counter=0;
     }
     static Player player1=new Player("Hubert","Marchwat",100000.0);
 

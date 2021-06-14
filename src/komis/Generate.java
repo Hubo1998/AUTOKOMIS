@@ -171,6 +171,9 @@ public class Generate {
                     removeCar(i);
                     player.playerGarage.add(carholder);
                     player.cash-=car.price;
+                    System.out.println("Podatek 2% od wartości:"+Math.round(car.price*0.02));
+                    player.cash-=car.price*0.02;
+                    player.counter+=1;
                 }
             }
         }
@@ -212,11 +215,21 @@ public class Generate {
         }
     }
     public void sellCar(Integer indexofcar,Player player,Client client){
-        System.out.println("Sprzedałeś "+player.playerGarage.get(indexofcar-1).producer+" "+player.playerGarage.get(indexofcar-1).model+" za "+Math.round(player.playerGarage.get(indexofcar-1).price));
-        player.cash+=player.playerGarage.get(indexofcar-1).price;
-        client.cash-=player.playerGarage.get(indexofcar-1).price;
-        Car carholder=player.playerGarage.get(indexofcar-1);
-        player.playerGarage.remove(indexofcar-1);
-        client.clientgarage.add(carholder);
+        int washprice=250;
+        if(client.cash>player.playerGarage.get(indexofcar-1).finalPrice) {
+            System.out.println("Sprzedałeś " + player.playerGarage.get(indexofcar - 1).producer + " " + player.playerGarage.get(indexofcar - 1).model + " za " + Math.round(player.playerGarage.get(indexofcar - 1).finalPrice));
+            player.cash += player.playerGarage.get(indexofcar - 1).finalPrice;
+            client.cash -= player.playerGarage.get(indexofcar - 1).finalPrice;
+            Car carholder = player.playerGarage.get(indexofcar - 1);
+            System.out.println("Pojazd umyto, kwota: "+washprice);
+            System.out.println("Podatek 2% od wartości wyniósł:"+Math.round(player.playerGarage.get(indexofcar-1).finalPrice*0.02));
+            player.cash-=player.playerGarage.get(indexofcar-1).finalPrice*0.02;
+            player.cash-=washprice;
+            player.playerGarage.remove(indexofcar - 1);
+            client.clientgarage.add(carholder);
+            player.counter=+1;
+        }else{
+            System.out.println("Twojego klienta nie stać na ten samochód, poszukaj innego.");
+        }
     }
 }

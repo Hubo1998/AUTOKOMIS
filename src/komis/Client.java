@@ -16,11 +16,11 @@ public class Client {
     @Override
     public String toString(){
         if (mood==Mood.takeeverythingbroken){
-            return "Klient o budżecie " +cash+" i zgodzi się na każde uszkodzenia.";
+            return "Klient o budżecie " +Math.round(cash)+" i zgodzi się na każde uszkodzenia.";
         } else if(mood==Mood.onlysuspension){
-            return "Klient o budżecie " +cash+" i zgodzi się tylko na uszkodzenia zawieszenia.";
+            return "Klient o budżecie " +Math.round(cash)+" i zgodzi się tylko na uszkodzenia zawieszenia.";
         } else if(mood==Mood.takeeverythingok){
-            return "Klient o budżecie " +cash+" i nie zgodzi się na żadne uszkodzenia.";
+            return "Klient o budżecie " +Math.round(cash)+" i nie zgodzi się na żadne uszkodzenia.";
         }else return "N/A";
     }
 }

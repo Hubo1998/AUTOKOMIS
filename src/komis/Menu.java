@@ -9,35 +9,42 @@ public class Menu {
     Generate generate=new Generate();
     public Scanner scanner=new Scanner(System.in);
     public boolean showFirstPage(){
-        System.out.println("Menu:");
-        System.out.println("1. Przeglądaj bazę samochodów do kupienia\n2. Przeglądaj bazę posiadanych samochodów\n3. Przejrzyj potencjalnych klientów\n4. Kup reklamę\n5. Sprawdź stan konta");
-        String inputfirstpage=scanner.nextLine();
-        switch(inputfirstpage){
-            case "1": {
-                showCarBase();
-                break;
+        if(Player.player1.cash==200000){
+            System.out.println("Udało Ci się podwoić majątek, brawo!");
+            System.out.println("Zrobiłeś to w :"+Player.player1.counter+" ruchach.");
+            return false;
+        }else {
+            System.out.println("Menu:");
+            System.out.println("1. Przeglądaj bazę samochodów do kupienia\n2. Przeglądaj bazę posiadanych samochodów\n3. Przejrzyj potencjalnych klientów\n4. Kup reklamę\n5. Sprawdź stan konta");
+            String inputfirstpage = scanner.nextLine();
+            switch (inputfirstpage) {
+                case "1": {
+                    showCarBase();
+                    break;
+                }
+                case "2": {
+                    checkGarageStatus(Player.player1);
+                    break;
+                }
+                case "3": {
+                    System.out.println("Baza potencjalnych klientów:");
+                    generate.viewBaseOfClients();
+                    break;
+                }
+                case "4": {
+                    buyAdvertisement(Player.player1);
+                    break;
+                }
+                case "5": {
+                    System.out.println("Twój stan konta:" + Math.round(Player.player1.cash));
+                    break;
+                }
+                case "exit": {
+                    return false;
+                }
+                default:
+                    return true;
             }
-            case "2": {
-                checkGarageStatus(Player.player1);
-                break;
-            }
-            case "3": {
-                System.out.println("Baza potencjalnych klientów:");
-                generate.viewBaseOfClients();
-                break;
-            }
-            case "4": {
-                buyAdvertisement(Player.player1);
-                break;
-            }
-            case "5": {
-                System.out.println("Twój stan konta:" + Math.round(Player.player1.cash));
-                break;
-            }
-            case "exit":{
-                return false;
-            }
-            default:return true;
         }
         return true;
     }
@@ -100,7 +107,7 @@ public class Menu {
             case "4"->{
                 System.out.println("Które auto chciałbyś sprzedać?");
                 String inputcartosell=scanner.nextLine();
-                System.out.println(player.playerGarage.get(Integer.parseInt(inputcartosell)-1).producer+" "+player.playerGarage.get(Integer.parseInt(inputcartosell)-1).model);
+                System.out.println(player.playerGarage.get(Integer.parseInt(inputcartosell)-1).producer+" "+player.playerGarage.get(Integer.parseInt(inputcartosell)-1).model+" za "+player.playerGarage.get(Integer.parseInt(inputcartosell)-1).finalPrice);
                 System.out.println("Komu chciałbyś sprzedać auto?");
                 generate.viewBaseOfClients();
                 String inputclienttosell=scanner.nextLine();
@@ -147,11 +154,13 @@ public class Menu {
                     counter+=1;
                 }
                 System.out.println("Zapłaciłeś: "+newspaperprice+"\nPrzybyło "+counter+" nowych klientów");
+                player.counter+=1;
             }
             case "2"->{
                 player.cash-=internetprice;
                 generate.generateClient();
                 System.out.println("Zapłaciłeś: "+internetprice+"\nPrzybył jeden nowy klient");
+                player.counter+=1;
             }
         }
     }

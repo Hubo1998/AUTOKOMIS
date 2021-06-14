@@ -44,7 +44,7 @@ public class Car extends Components {
         int thingBroken = rand.nextInt(5);
         if (isCompOk(comps)) {
             System.out.println(comps + " są sprawne");
-        } else if (chanceOfSuccess >= steve.guarantee) {
+        } else if (chanceOfSuccess >= steve.guarantee & player.cash - (price * valueOf(comps)) * (priceRandomized / 100) > 0) {
             //w zadaniu nie jest opisane, czy przy niepowodzeniu naprawy ma być pobierana opłata,
             //założyłem, że będzie pobierana połowa kwoty naprawy, która by się zakończyła powodzeniem.
             System.out.println("Niestety Twój mechanik nie podołał, jedynym ratunkiem jest Janusz\njednemu musisz zapłacić połowę stawki:"+halfOfmechanicprice+" a dodatkowo Januszowi:"+januszprice);
@@ -52,6 +52,7 @@ public class Car extends Components {
             player.cash -= januszprice;
             setService(comps);
             finalPrice+=(price*valueOf(comps));
+            player.counter+=1;
             if (chanceOfBroke <= steve.brokelse) {
                 System.out.println("Jakby tego było mało, Twój mechanik zepsuł coś jeszcze, trzeba będzie to naprawić :S");
                 int x=breakSomething(thingBroken);
@@ -62,6 +63,7 @@ public class Car extends Components {
             finalPrice += (price * valueOf(comps));
             setService(comps);
             System.out.println(comps + " naprawione, cena za usługę:" + Math.round(price * valueOf(comps) * (priceRandomized / 100)));
+            player.counter+=1;
         } else {
             System.out.println("Nie stać Cię");
         }
