@@ -9,7 +9,7 @@ public class Menu {
     Generate generate=new Generate();
     public Scanner scanner=new Scanner(System.in);
     public boolean showFirstPage(){
-        if(Player.player1.cash==200000){
+        if(Player.player1.finalCash >=Player.player1.cash*2){
             System.out.println("Udało Ci się podwoić majątek, brawo!");
             System.out.println("Zrobiłeś to w :"+Player.player1.counter+" ruchach.");
             return false;
@@ -36,7 +36,7 @@ public class Menu {
                     break;
                 }
                 case "5": {
-                    System.out.println("Twój stan konta:" + Math.round(Player.player1.cash));
+                    System.out.println("Twój stan konta:" + Math.round(Player.player1.finalCash));
                     break;
                 }
                 case "exit": {
@@ -111,7 +111,7 @@ public class Menu {
                 System.out.println("Komu chciałbyś sprzedać auto?");
                 generate.viewBaseOfClients();
                 String inputclienttosell=scanner.nextLine();
-                generate.sellCar(Integer.parseInt(inputcartosell),Player.player1,generate.baseOfClients.get(Integer.parseInt(inputclienttosell)-1));
+                generate.moodOfClient(Integer.parseInt(inputcartosell)-1,Player.player1,generate.baseOfClients.get(Integer.parseInt(inputclienttosell)-1));
             }
         }
     }
@@ -148,7 +148,7 @@ public class Menu {
         int internetprice=250;
         switch(inputAdvertisementchoice){
             case "1"->{
-                player.cash-=newspaperprice;
+                player.finalCash -=newspaperprice;
                 for (int i=0;i<rand.nextInt(5);i++) {
                     generate.generateClient();
                     counter+=1;
@@ -157,7 +157,7 @@ public class Menu {
                 player.counter+=1;
             }
             case "2"->{
-                player.cash-=internetprice;
+                player.finalCash -=internetprice;
                 generate.generateClient();
                 System.out.println("Zapłaciłeś: "+internetprice+"\nPrzybył jeden nowy klient");
                 player.counter+=1;

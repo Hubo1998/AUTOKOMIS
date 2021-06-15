@@ -43,26 +43,26 @@ public class Car extends Components {
         int chanceOfBroke = rand.nextInt(101);
         int thingBroken = rand.nextInt(5);
         if (isCompOk(comps)) {
-            System.out.println(comps + " są sprawne");
-        } else if (chanceOfSuccess >= steve.guarantee & player.cash - (price * valueOf(comps)) * (priceRandomized / 100) > 0) {
+            System.out.println(nameOfComp(comps) + " są sprawne");
+        } else if (chanceOfSuccess >= steve.guarantee & player.finalCash - (price * valueOf(comps)) * (priceRandomized / 100) > 0) {
             //w zadaniu nie jest opisane, czy przy niepowodzeniu naprawy ma być pobierana opłata,
             //założyłem, że będzie pobierana połowa kwoty naprawy, która by się zakończyła powodzeniem.
             System.out.println("Niestety Twój mechanik nie podołał, jedynym ratunkiem jest Janusz\njednemu musisz zapłacić połowę stawki:"+halfOfmechanicprice+" a dodatkowo Januszowi:"+januszprice);
-            player.cash -= halfOfmechanicprice;
-            player.cash -= januszprice;
+            player.finalCash -= halfOfmechanicprice;
+            player.finalCash -= januszprice;
             setService(comps);
             finalPrice+=(price*valueOf(comps));
             player.counter+=1;
             if (chanceOfBroke <= steve.brokelse) {
                 System.out.println("Jakby tego było mało, Twój mechanik zepsuł coś jeszcze, trzeba będzie to naprawić :S");
                 int x=breakSomething(thingBroken);
-                System.out.println("Zepsuto:" + LISTofComponents[x]);
+                System.out.println("Zepsuto:" + nameOfComp(comps));
             }
-        } else if (player.cash - (price * valueOf(comps)) * (priceRandomized / 100) > 0) {
-            player.cash -= (price * valueOf(comps)) * (priceRandomized / 100);
+        } else if (player.finalCash - (price * valueOf(comps)) * (priceRandomized / 100) > 0) {
+            player.finalCash -= (price * valueOf(comps)) * (priceRandomized / 100);
             finalPrice += (price * valueOf(comps));
             setService(comps);
-            System.out.println(comps + " naprawione, cena za usługę:" + Math.round(price * valueOf(comps) * (priceRandomized / 100)));
+            System.out.println(nameOfComp(comps) + " naprawione, cena za usługę:" + Math.round(price * valueOf(comps) * (priceRandomized / 100)));
             player.counter+=1;
         } else {
             System.out.println("Nie stać Cię");
@@ -80,7 +80,9 @@ public class Car extends Components {
         if(gearboxIsOk) System.out.println("5. Skrzynia biegów OK");
         else System.out.println("5. Skrzynia biegów NIE OK");
         }
-
+    public boolean isCarOk(){
+        return brakesAreOk & suspensionIsOk & engineIsOk & bodyIsOk & gearboxIsOk;
+    }
 }
 
 
