@@ -41,7 +41,6 @@ public class Car extends Components {
         int januszprice= (int) Math.round((price * valueOf(comps))*(priceRandomizedextra/100));
         int chanceOfSuccess = rand.nextInt(101);
         int chanceOfBroke = rand.nextInt(101);
-        int thingBroken = rand.nextInt(5);
         if (isCompOk(comps)) {
             System.out.println(nameOfComp(comps) + " są sprawne");
         } else if (chanceOfSuccess >= steve.guarantee & player.finalCash - (price * valueOf(comps)) * (priceRandomized / 100) > 0) {
@@ -55,7 +54,6 @@ public class Car extends Components {
             player.counter+=1;
             if (chanceOfBroke <= steve.brokelse) {
                 System.out.println("Jakby tego było mało, Twój mechanik zepsuł coś jeszcze, trzeba będzie to naprawić :S");
-                int x=breakSomething(thingBroken);
                 System.out.println("Zepsuto:" + nameOfComp(comps));
             }
         } else if (player.finalCash - (price * valueOf(comps)) * (priceRandomized / 100) > 0) {
