@@ -14,8 +14,9 @@ public class Menu {
             System.out.println("Zrobiłeś to w :"+Player.player1.counter+" ruchach.");
             return false;
         }else {
+            System.out.println("Twój stan konta: "+Math.round(Player.player1.finalCash));
             System.out.println("Menu:");
-            System.out.println("1. Przeglądaj bazę samochodów do kupienia\n2. Przeglądaj bazę posiadanych samochodów\n3. Przejrzyj potencjalnych klientów\n4. Kup reklamę\n5. Sprawdź stan konta");
+            System.out.println("1. Przeglądaj bazę samochodów do kupienia\n2. Przeglądaj bazę posiadanych samochodów\n3. Przejrzyj potencjalnych klientów\n4. Kup reklamę\n5. Sprawdź stan konta\n6. Pokaż historię transakcji");
             String inputfirstpage = scanner.nextLine();
             switch (inputfirstpage) {
                 case "1": {
@@ -39,6 +40,10 @@ public class Menu {
                     System.out.println("Twój stan konta:" + Math.round(Player.player1.finalCash));
                     break;
                 }
+                case "6":{
+                    generate.showHistory(Player.player1);
+                    break;
+                }
                 case "exit": {
                     return false;
                 }
@@ -57,7 +62,7 @@ public class Menu {
         System.out.println("Menu:\n1. Pokaż menu\n2. Kup samochód\n3. Sprawdź samochód");
         String inputshowcar=scanner.nextLine();
         switch (inputshowcar) {
-            case "1" -> showFirstPage();
+            case "1" -> "".isEmpty();
             case "2" -> {
                 System.out.println("Wpisz numer samochodu, który chciałbyś kupić:");
                 String inputbuycar = scanner.nextLine();
@@ -136,8 +141,8 @@ public class Menu {
         System.out.println(car.producer+" "+car.model+" u Mechanika");
         car.repair(comps,steve,player);
         System.out.println(car.producer+" "+car.model);
-        car.carPartsStatus();
         System.out.println("Aktualny status podzespołów");
+        car.carPartsStatus();
     }
     public void buyAdvertisement(Player player){
         System.out.println("Wybierz reklamę którą chcesz kupić:\n1. Reklama w gazecie\n2. Reklama w internecie");

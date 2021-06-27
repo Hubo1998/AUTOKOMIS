@@ -227,7 +227,10 @@ public class Generate {
             player.finalCash -=washprice;
             player.playerGarage.remove(indexofcar);
             client.clientgarage.add(carholder);
+            generateClient();
+            generateClient();
             player.counter=+1;
+            player.history.add(client+"123");
         }else{
             System.out.println("Twojego klienta nie stać na ten samochód, poszukaj innego.");
         }
@@ -241,5 +244,14 @@ public class Generate {
             else System.out.println("Ten klient nie kupi takiego samochodu");
         }else if(client.mood==Client.Mood.takeeverythingbroken) sellCar(indexofcar, player, client);
             else System.out.println("Coś poszło nie tak");
+    }
+    public void showHistory(Player player){
+        if (player.history.isEmpty()){
+            System.out.println("Nie było do tej pory żadnych transakcji");
+        }else {
+            for(int i=0;i<player.history.size();i++){
+                System.out.println("Transakcja numer "+(i+1)+". "+player.history.get(i));
+            }
+        }
     }
 }

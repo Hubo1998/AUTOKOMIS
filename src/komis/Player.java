@@ -8,6 +8,7 @@ public class Player {
     public Double finalCash;
     public Double cash;
     public ArrayList<Car> playerGarage= new ArrayList<>();
+    public ArrayList<String> history=new ArrayList<>();
     public int counter;
 
     public Player(String firstName,String lastName,Double cash){
