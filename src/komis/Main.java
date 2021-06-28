@@ -47,9 +47,7 @@ public class Main {
 	Menu menu=new Menu();
 	System.out.println("Wprowadź ilość graczy");
 	String inputamount=menu.scanner.nextLine();
-	menu.createPlayers(Integer.parseInt(inputamount));
-	menu.generate.createCarBase();
-	menu.generate.createBaseOfClients();
+	menu.startGame(Integer.parseInt(inputamount));
 	boolean breaker=true;
 	while (breaker){
 		for(int i=0;i<menu.baseOfPlayers.size();i++){

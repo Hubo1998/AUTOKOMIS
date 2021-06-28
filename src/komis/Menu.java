@@ -10,13 +10,15 @@ public class Menu {
     Generate generate=new Generate();
     public Scanner scanner=new Scanner(System.in);
     public ArrayList<Player> baseOfPlayers=new ArrayList<>();
-    public void createPlayers(int amount){
+    public void startGame(int amount){
         System.out.println("Wprowadź kwotę pieniędzy dla wszystkich graczy na początek.");
         String cash=scanner.nextLine();
         for(int i=0;i<amount;i++){
             System.out.println("Imię gracza nr "+(i+1));
             String firstName=scanner.nextLine();
             baseOfPlayers.add(new Player(firstName,Double.valueOf(cash)));
+            baseOfPlayers.get(i).createCarBase();
+            baseOfPlayers.get(i).createBaseOfClients();
         }
     }
     public boolean showFirstPage(Player player){
@@ -39,7 +41,7 @@ public class Menu {
                     break;
                 }
                 case "3": {
-                    generate.viewBaseOfClients();
+                    player.viewBaseOfClients();
                     break;
                 }
                 case "4": {
@@ -51,7 +53,7 @@ public class Menu {
                     break;
                 }
                 case "6":{
-                    generate.showHistory(player);
+                    player.showHistory();
                     break;
                 }
                 case "exit": {
@@ -65,7 +67,7 @@ public class Menu {
     }
     public void showCarBase(Player player){
         System.out.println("To są samochody które możesz kupić:");
-        generate.viewCarBase();
+        player.viewCarBase();
         System.out.println("Menu:\n1. Pokaż menu główne\n2. Kup samochód\n3. Sprawdź samochód");
         String inputshowcar=scanner.nextLine();
         switch (inputshowcar) {
@@ -73,13 +75,13 @@ public class Menu {
             case "2" -> {
                 System.out.println("Wpisz numer samochodu, który chciałbyś kupić:");
                 String inputbuycar = scanner.nextLine();
-                generate.buyCar(generate.baseOfCars.get(Integer.parseInt(inputbuycar) - 1), player);
+                player.buyCar(player.baseOfCars.get(Integer.parseInt(inputbuycar) - 1), player);
             }
             case "3" -> {
                 System.out.println("Wpisz numer samochodu, który chciałbyś sprawdzić:");
                 String inputcheckcar = scanner.nextLine();
-                System.out.println(generate.baseOfCars.get(Integer.parseInt(inputcheckcar)-1).producer+" "+generate.baseOfCars.get(Integer.parseInt(inputcheckcar)-1).model);
-                generate.baseOfCars.get(Integer.parseInt(inputcheckcar)-1).carPartsStatus();
+                System.out.println(player.baseOfCars.get(Integer.parseInt(inputcheckcar)-1).producer+" "+player.baseOfCars.get(Integer.parseInt(inputcheckcar)-1).model);
+                player.baseOfCars.get(Integer.parseInt(inputcheckcar)-1).carPartsStatus();
             }
         }
     }
@@ -124,9 +126,9 @@ public class Menu {
                     String inputcartosell = scanner.nextLine();
                     System.out.println(player.playerGarage.get(Integer.parseInt(inputcartosell) - 1).producer + " " + player.playerGarage.get(Integer.parseInt(inputcartosell) - 1).model + " za " + Math.round(player.playerGarage.get(Integer.parseInt(inputcartosell) - 1).finalPrice));
                     System.out.println("Komu chciałbyś sprzedać auto?");
-                    generate.viewBaseOfClients();
+                    player.viewBaseOfClients();
                     String inputclienttosell = scanner.nextLine();
-                    generate.moodOfClient(Integer.parseInt(inputcartosell) - 1, player, generate.baseOfClients.get(Integer.parseInt(inputclienttosell) - 1));
+                    player.sellInHarmonyWithMoodOfClient(Integer.parseInt(inputcartosell) - 1, player, player.baseOfClients.get(Integer.parseInt(inputclienttosell) - 1));
                 }
             }
         }
