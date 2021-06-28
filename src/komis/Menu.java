@@ -11,14 +11,34 @@ public class Menu {
     public Scanner scanner=new Scanner(System.in);
     public ArrayList<Player> baseOfPlayers=new ArrayList<>();
     public void startGame(int amount){
-        System.out.println("Wprowadź kwotę pieniędzy dla wszystkich graczy na początek.");
-        String cash=scanner.nextLine();
-        for(int i=0;i<amount;i++){
-            System.out.println("Imię gracza nr "+(i+1));
-            String firstName=scanner.nextLine();
-            baseOfPlayers.add(new Player(firstName,Double.valueOf(cash)));
-            baseOfPlayers.get(i).createCarBase();
-            baseOfPlayers.get(i).createBaseOfClients();
+        //szybkie startery do testów.
+        if (amount==22){
+            baseOfPlayers.add(new Player("firstPlayer",100000.0));
+            baseOfPlayers.get(0).createCarBase();
+            baseOfPlayers.get(0).createBaseOfClients();
+            baseOfPlayers.add(new Player("secondPlayer",100000.0));
+            baseOfPlayers.get(1).createCarBase();
+            baseOfPlayers.get(1).createBaseOfClients();
+        } else if(amount==33){
+            baseOfPlayers.add(new Player("firstPlayer",100000.0));
+            baseOfPlayers.get(0).createCarBase();
+            baseOfPlayers.get(0).createBaseOfClients();
+            baseOfPlayers.add(new Player("secondPlayer",100000.0));
+            baseOfPlayers.get(1).createCarBase();
+            baseOfPlayers.get(1).createBaseOfClients();
+            baseOfPlayers.add(new Player("thirdPlayer",100000.0));
+            baseOfPlayers.get(2).createCarBase();
+            baseOfPlayers.get(2).createBaseOfClients();
+        }else{
+            System.out.println("Wprowadź kwotę pieniędzy dla wszystkich graczy na początek.");
+            String cash=scanner.nextLine();
+            for(int i=0;i<amount;i++){
+                System.out.println("Imię gracza nr "+(i+1));
+                String firstName=scanner.nextLine();
+                baseOfPlayers.add(new Player(firstName,Double.valueOf(cash)));
+                baseOfPlayers.get(i).createCarBase();
+                baseOfPlayers.get(i).createBaseOfClients();
+            }
         }
     }
     public boolean showFirstPage(Player player){
@@ -75,7 +95,7 @@ public class Menu {
             case "2" -> {
                 System.out.println("Wpisz numer samochodu, który chciałbyś kupić:");
                 String inputbuycar = scanner.nextLine();
-                player.buyCar(player.baseOfCars.get(Integer.parseInt(inputbuycar) - 1), player);
+                player.buyCar(player.baseOfCars.get(Integer.parseInt(inputbuycar) - 1));
             }
             case "3" -> {
                 System.out.println("Wpisz numer samochodu, który chciałbyś sprawdzić:");
@@ -128,7 +148,7 @@ public class Menu {
                     System.out.println("Komu chciałbyś sprzedać auto?");
                     player.viewBaseOfClients();
                     String inputclienttosell = scanner.nextLine();
-                    player.sellInHarmonyWithMoodOfClient(Integer.parseInt(inputcartosell) - 1, player, player.baseOfClients.get(Integer.parseInt(inputclienttosell) - 1));
+                    player.sellInHarmonyWithMoodOfClient(Integer.parseInt(inputcartosell) - 1, player.baseOfClients.get(Integer.parseInt(inputclienttosell) - 1));
                 }
             }
         }
@@ -164,26 +184,6 @@ public class Menu {
     public void buyAdvertisement(Player player){
         System.out.println("Wybierz reklamę którą chcesz kupić:\n1. Reklama w gazecie\n2. Reklama w internecie");
         String inputAdvertisementchoice=scanner.nextLine();
-        Random rand=new Random();
-        int counter=0;
-        int newspaperprice=1000;
-        int internetprice=250;
-        switch(inputAdvertisementchoice){
-            case "1"->{
-                player.finalCash -=newspaperprice;
-                for (int i=0;i<rand.nextInt(5);i++) {
-                    generate.generateClient();
-                    counter+=1;
-                }
-                System.out.println("Zapłaciłeś: "+newspaperprice+"\nPrzybyło "+counter+" nowych klientów");
-                player.counter+=1;
-            }
-            case "2"->{
-                player.finalCash -=internetprice;
-                generate.generateClient();
-                System.out.println("Zapłaciłeś: "+internetprice+"\nPrzybył jeden nowy klient");
-                player.counter+=1;
-            }
-        }
+        player.buyAdvertisement(Integer.parseInt(inputAdvertisementchoice));
     }
 }

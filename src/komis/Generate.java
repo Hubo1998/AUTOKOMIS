@@ -24,7 +24,6 @@ public class Generate {
         double value=genPrice(segment,yearOfProduction,brakes,suspension,engine,body,gearbox);
         return new Car(producers[x],models[genModel(x)],yearOfProduction,segment,value,new Components(brakes,suspension,engine,body,gearbox));
     }
-
     public boolean trueorFalse(){
         //50% szans, że podzespół będzie sprawny.
         Random rand=new Random();
@@ -153,12 +152,11 @@ public class Generate {
     public Client generateClient(){
         return new Client(genCash(),genMood(),genID());
     }
-
     public int genCash(){
         Random rand=new Random();
+        clientcounter+=1;
         return rand.nextInt((clientcounter + 1) * 10000);
     }
-
     public Client.Mood genMood(){
         Random rand=new Random();
         int x=rand.nextInt(100);
