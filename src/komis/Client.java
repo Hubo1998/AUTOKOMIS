@@ -3,15 +3,17 @@ package komis;
 import java.util.ArrayList;
 
 public class Client {
-    public Double cash;
+    public int cash;
     public Mood mood;
+    public int ID;
     public ArrayList<Car> clientgarage=new ArrayList<>();
     public enum Mood{
         takeeverythingbroken,onlysuspension,takeeverythingok
     }
-    public Client(Double cash,Mood mood){
+    public Client(int cash,Mood mood,int ID){
         this.cash=cash;
         this.mood=mood;
+        this.ID=ID;
     }
     @Override
     public String toString(){

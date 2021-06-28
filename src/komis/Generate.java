@@ -9,6 +9,7 @@ public class Generate {
     public ArrayList<Car> baseOfCars= new ArrayList<>();
     public ArrayList<Client> baseOfClients=new ArrayList<>();
     public final static Integer DEFAULT_YEAR_STARER=1990;
+    public int identifier=0;
 
     public void createCarBase(){
         for (int i=0;i<20;i++){
@@ -100,7 +101,6 @@ public class Generate {
             case 46 -> y = rand.nextInt(4) + 759;
             default -> y = 0;
         }
-        //System.out.println(y);
         return y;
     }
     public Car.Segment genSegment(Integer random){
@@ -195,12 +195,12 @@ public class Generate {
     }
 
     public void generateClient(){
-        baseOfClients.add(new Client(genCash(),genMood()));
+        baseOfClients.add(new Client(genCash(),genMood(),genID()));
     }
 
-    public Double genCash(){
+    public int genCash(){
         Random rand=new Random();
-        return (double) rand.nextInt((baseOfClients.size() + 1) * 10000);
+        return rand.nextInt((baseOfClients.size() + 1) * 10000);
     }
 
     public Client.Mood genMood(){
@@ -213,6 +213,9 @@ public class Generate {
         }else {
             return Client.Mood.takeeverythingok;
         }
+    }
+    public int genID(){
+        return identifier+=1;
     }
     public void sellCar(Integer indexofcar,Player player,Client client){
         int washprice=250;
@@ -230,7 +233,7 @@ public class Generate {
             generateClient();
             generateClient();
             player.counter=+1;
-            player.history.add(client+"123");
+            player.history.add("Klient numer "+client.ID+" kupił samochód od "+player.firstName);
         }else{
             System.out.println("Twojego klienta nie stać na ten samochód, poszukaj innego.");
         }

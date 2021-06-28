@@ -121,19 +121,23 @@ public class Menu {
         }
     }
     public void Mechanicchoice(Components.Comps comps,Integer cartorepair){
-        System.out.println("U którego mechanika chciałbyś naprawić auto?");
-        System.out.println(Player.player1.playerGarage.get(cartorepair).nameOfComp(comps)+" cena u Janusza (100% gwarancji, że się uda, 0% szans na zepsucie czegoś innego cena między "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Janusz.price*0.01)+" - "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Janusz.price+10)*0.01));
-        System.out.println(Player.player1.playerGarage.get(cartorepair).nameOfComp(comps)+" cena u Mariana (90% gwarancji, że się uda, 0% szans na zepsucie czegoś innego cena między "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Marian.price*0.01)+" - "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Marian.price+10)*0.01));
-        System.out.println(Player.player1.playerGarage.get(cartorepair).nameOfComp(comps)+" cena u Adriana (80% gwarancji, że się uda, 2% szans na zepsucie czegoś innego cena między "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Adrian.price*0.01)+" - "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Adrian.price+10)*0.01));
-        System.out.println("Przemyśl to dobrze, jak się nie uda, trzeba będzie jechać do Janusza");
-        String inputmechanicchoice=scanner.nextLine();
-        switch(inputmechanicchoice){
-            case "1"->repairTime(Mechanic.Janusz,comps,Player.player1.playerGarage.get(cartorepair),Player.player1);
-            case "2"->repairTime(Mechanic.Marian,comps,Player.player1.playerGarage.get(cartorepair),Player.player1);
-            case "3"->repairTime(Mechanic.Adrian,comps,Player.player1.playerGarage.get(cartorepair),Player.player1);
-            default -> {
-                System.out.println("Coś nie teges");
-                showFirstPage();
+        if(Player.player1.playerGarage.get(cartorepair).isCompOk(comps)){
+            System.out.println(Player.player1.playerGarage.get(cartorepair).nameOfComp(comps)+" są sprawne");
+        }else{
+            System.out.println("U którego mechanika chciałbyś naprawić auto?");
+            System.out.println(Player.player1.playerGarage.get(cartorepair).nameOfComp(comps)+" cena u Janusza ("+Mechanic.Janusz.guarantee+"% gwarancji, że się uda, "+Mechanic.Janusz.brokelse+"% szans na zepsucie czegoś innego cena między "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Janusz.price*0.01)+" - "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Janusz.price+10)*0.01));
+            System.out.println(Player.player1.playerGarage.get(cartorepair).nameOfComp(comps)+" cena u Mariana ("+Mechanic.Marian.guarantee+"% gwarancji, że się uda, "+Mechanic.Marian.brokelse+"% szans na zepsucie czegoś innego cena między "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Marian.price*0.01)+" - "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Marian.price+10)*0.01));
+            System.out.println(Player.player1.playerGarage.get(cartorepair).nameOfComp(comps)+" cena u Adriana ("+Mechanic.Adrian.guarantee+"% gwarancji, że się uda, "+Mechanic.Adrian.brokelse+"% szans na zepsucie czegoś innego cena między "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Adrian.price*0.01)+" - "+Math.round(Player.player1.playerGarage.get(cartorepair).price*Player.player1.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Adrian.price+10)*0.01));
+            System.out.println("Przemyśl to dobrze, jak się nie uda, trzeba będzie jechać do Janusza");
+            String inputmechanicchoice=scanner.nextLine();
+            switch(inputmechanicchoice){
+                case "1"->repairTime(Mechanic.Janusz,comps,Player.player1.playerGarage.get(cartorepair),Player.player1);
+                case "2"->repairTime(Mechanic.Marian,comps,Player.player1.playerGarage.get(cartorepair),Player.player1);
+                case "3"->repairTime(Mechanic.Adrian,comps,Player.player1.playerGarage.get(cartorepair),Player.player1);
+                default -> {
+                    System.out.println("Coś nie teges");
+                    showFirstPage();
+                }
             }
         }
     }

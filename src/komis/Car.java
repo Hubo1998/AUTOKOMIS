@@ -12,10 +12,7 @@ public class Car extends Components {
     Random rand = new Random();
 
     public enum Segment {
-        Premium,
-        Standard,
-        Budget,
-        NA
+        Premium, Standard, Budget, NA
     }
 
     public Car(String producer, String model, Integer yearOfProduction, Segment segment, Double price, Components components) {
@@ -32,8 +29,6 @@ public class Car extends Components {
     public String toString() {
         return producer + " " + model + " " + yearOfProduction + " rok za " + Math.round(finalPrice);
     }
-
-    //@Override
     public void repair(Comps comps, Mechanic steve, Player player) {
         double priceRandomized = rand.nextInt(11) + steve.price;
         double priceRandomizedextra = rand.nextInt(11) + Mechanic.Janusz.price;
@@ -41,25 +36,23 @@ public class Car extends Components {
         int januszprice= (int) Math.round((price * valueOf(comps))*(priceRandomizedextra/100));
         int chanceOfSuccess = rand.nextInt(101);
         int chanceOfBroke = rand.nextInt(101);
-        if (isCompOk(comps)) {
-            System.out.println(nameOfComp(comps) + " są sprawne");
-        } else if (chanceOfSuccess >= steve.guarantee & player.finalCash - (price * valueOf(comps)) * (priceRandomized / 100) > 0) {
+        if (chanceOfSuccess >= steve.guarantee & player.finalCash - (price * valueOf(comps)) * (priceRandomized / 100) > 0) {
             //w zadaniu nie jest opisane, czy przy niepowodzeniu naprawy ma być pobierana opłata,
             //założyłem, że będzie pobierana połowa kwoty naprawy, która by się zakończyła powodzeniem.
             System.out.println("Niestety Twój mechanik nie podołał, jedynym ratunkiem jest Janusz\njednemu musisz zapłacić połowę stawki:"+halfOfmechanicprice+" a dodatkowo Januszowi:"+januszprice);
             player.finalCash -= halfOfmechanicprice;
             player.finalCash -= januszprice;
-            setService(comps);
+            setService(comps,true);
             finalPrice+=(price*valueOf(comps));
             player.counter+=1;
             if (chanceOfBroke <= steve.brokelse) {
                 System.out.println("Jakby tego było mało, Twój mechanik zepsuł coś jeszcze, trzeba będzie to naprawić :S");
-                System.out.println("Zepsuto:" + nameOfComp(comps));
+                breakSomething();
             }
         } else if (player.finalCash - (price * valueOf(comps)) * (priceRandomized / 100) > 0) {
             player.finalCash -= (price * valueOf(comps)) * (priceRandomized / 100);
             finalPrice += (price * valueOf(comps));
-            setService(comps);
+            setService(comps,true);
             System.out.println(nameOfComp(comps) + " naprawione, cena za usługę:" + Math.round(price * valueOf(comps) * (priceRandomized / 100)));
             player.counter+=1;
         } else {

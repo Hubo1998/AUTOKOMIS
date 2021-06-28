@@ -21,7 +21,7 @@ public class Components {
     final static public String[] LISTofComponents={"Hamulce","Zawieszenie","Silnik","Karoseria","Skrzynia biegów"};
 
     public enum Comps {
-        gearbox,brakes,engine,body,suspension
+        gearbox,brakes,engine,body,suspension,NA
     }
 
     public Components(boolean brakesAreOk,boolean suspensionIsOk,boolean engineIsOk,boolean bodyIsOk,boolean gearboxIsOk) {
@@ -52,17 +52,17 @@ public class Components {
             return 1;
         }
     }
-    public void setService(Comps comps){
+    public void setService(Comps comps,Boolean choice){
         if (comps==Comps.brakes){
-            this.brakesAreOk=true;
+            this.brakesAreOk=choice;
         }else if(comps==Comps.suspension){
-            this.suspensionIsOk=true;
+            this.suspensionIsOk=choice;
         }else if(comps==Comps.engine){
-            this.engineIsOk=true;
+            this.engineIsOk=choice;
         }else if(comps==Comps.body){
-            this.bodyIsOk=true;
+            this.bodyIsOk=choice;
         }else if(comps==Comps.gearbox){
-            this.gearboxIsOk=true;
+            this.gearboxIsOk=choice;
         }
     }
     public boolean isCompOk(Comps comps){
@@ -80,62 +80,38 @@ public class Components {
             return false;
         }
     }
-
-    public int breakSomething(Integer number){
-        Random rand=new Random();
-        int x=rand.nextInt();
+    public void breaked(Comps comps){
+        System.out.println("Zepsuto: "+nameOfComp(comps));
+    }
+    public void breakSomething(){
+        Comps randomComp=rollComp();
         if(!brakesAreOk&!suspensionIsOk&!engineIsOk&!bodyIsOk&!gearboxIsOk) {
-            System.out.println("No już nie ma co psuć :/");
+            System.out.println("Już nie ma co psuć :/");
+        }else if(isCompOk(randomComp)) {
+            setService(randomComp,false);
+            breaked(randomComp);
         }else{
-            switch (number) {
-                case 0 -> {
-                    if (brakesAreOk) {
-                        brakesAreOk = false;
-                        return 0;
-                    } else breakSomething(x);
-                }
-                case 1 -> {
-                    if (suspensionIsOk) {
-                        suspensionIsOk = false;
-                        return 1;
-                    } else breakSomething(x);
-                }
-                case 2 -> {
-                    if (engineIsOk) {
-                        engineIsOk = false;
-                        return 2;
-                    } else breakSomething(x);
-                }
-                case 3 -> {
-                    if (bodyIsOk) {
-                        bodyIsOk = false;
-                        return 3;
-                    } else breakSomething(x);
-                }
-                case 4 -> {
-                    if (gearboxIsOk) {
-                        gearboxIsOk = false;
-                        return 4;
-                    } else breakSomething(x);
-                }
-                default -> System.out.println("Coś poszło nie tak");
-            }
+            breakSomething();
         }
-        return 0;
     }
     public String nameOfComp(Comps comps){
-        if (comps==Comps.brakes){
-            return "Hamulce";
-        }else if(comps==Comps.suspension){
-            return "Zawieszenie";
-        }else if(comps==Comps.engine){
-            return "Silnik";
-        }else if(comps==Comps.body){
-            return "Karoseria";
-        }else if(comps==Comps.gearbox){
-            return "Skrzynia biegów";
-        }else{
-            return "Coś nie tak";
+        if (comps==Comps.brakes) return "Hamulce";
+        else if(comps==Comps.suspension) return "Zawieszenie";
+        else if(comps==Comps.engine) return "Silnik";
+        else if(comps==Comps.body) return "Karoseria";
+        else if(comps==Comps.gearbox) return "Skrzynia biegów";
+        else return "Coś nie tak";
+    }
+    public Comps rollComp(){
+        Random rand=new Random();
+        int x=rand.nextInt(5);
+        switch (x){
+            case 0 -> { return Comps.brakes; }
+            case 1 -> { return Comps.suspension; }
+            case 2 -> { return Comps.engine; }
+            case 3 -> { return Comps.body; }
+            case 4 -> { return Comps.gearbox; }
+            default -> { return Comps.NA; }
         }
     }
 }
