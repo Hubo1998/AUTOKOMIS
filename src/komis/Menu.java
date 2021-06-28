@@ -1,5 +1,6 @@
 package komis;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,6 +9,16 @@ public class Menu {
     }
     Generate generate=new Generate();
     public Scanner scanner=new Scanner(System.in);
+    public ArrayList<Player> baseOfPlayers=new ArrayList<>();
+    public void createPlayers(int amount){
+        System.out.println("Wprowadź kwotę pieniędzy dla wszystkich graczy na początek.");
+        String cash=scanner.nextLine();
+        for(int i=0;i<amount;i++){
+            System.out.println("Imię gracza nr "+(i+1));
+            String firstName=scanner.nextLine();
+            baseOfPlayers.add(new Player(firstName,Double.valueOf(cash)));
+        }
+    }
     public boolean showFirstPage(Player player){
         if(player.finalCash >=player.cash*2){
             System.out.println("Udało Ci się podwoić majątek, brawo!");

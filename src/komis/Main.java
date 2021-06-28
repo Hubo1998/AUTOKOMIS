@@ -44,14 +44,20 @@ public class Main {
 	Player.player1.playerGarage.get(0).repair(Components.Comps.brakes,Mechanic.Adrian,Player.player1);
 	Player.player1.playerGarage.get(0).carPartsStatus();
 	System.out.println(Player.player1.playerGarage.get(0).gearboxvalue);*/
-    Player player1=new Player("Hubert","Marchwat",100000.0);
 	Menu menu=new Menu();
+	System.out.println("Wprowadź ilość graczy");
+	String inputamount=menu.scanner.nextLine();
+	menu.createPlayers(Integer.parseInt(inputamount));
 	menu.generate.createCarBase();
 	menu.generate.createBaseOfClients();
-	while (true){
-	    if(!menu.showFirstPage(player1)){
-	        break;
-        }
+	boolean breaker=true;
+	while (breaker){
+		for(int i=0;i<menu.baseOfPlayers.size();i++){
+			if(!menu.showFirstPage(menu.baseOfPlayers.get(i))){
+				breaker=false;
+				break;
+			}
+		}
     }
     }
 }
