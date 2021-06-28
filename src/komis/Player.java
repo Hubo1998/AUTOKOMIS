@@ -18,7 +18,6 @@ public class Player {
         this.counter=0;
         this.cash = cash;
     }
-    static Player player1=new Player("Hubert","Marchwat",100000.0);
 
     public void checkPlayerGarage(){
         for(int i=0;i<playerGarage.size();i++){
@@ -26,6 +25,6 @@ public class Player {
         }
     }
     public void checkCash(){
-        System.out.println(Math.round(this.finalCash));
+        System.out.println("Twój stan kontaa : "+Math.round(finalCash));
     }
 }

@@ -189,6 +189,7 @@ public class Generate {
         }
     }
     public void viewBaseOfClients(){
+        System.out.println("Baza potencjalnych klientów:");
         for(int i=0;i<baseOfClients.size();i++){
             System.out.println(i+1+". "+baseOfClients.get(i));
         }
@@ -228,7 +229,7 @@ public class Generate {
             System.out.println("Podatek 2% od wartości wyniósł:"+Math.round(player.playerGarage.get(indexofcar).finalPrice*0.02));
             player.finalCash -=player.playerGarage.get(indexofcar).finalPrice*0.02;
             player.finalCash -=washprice;
-            player.playerGarage.remove(indexofcar);
+            player.playerGarage.remove(player.playerGarage.get(indexofcar));
             client.clientgarage.add(carholder);
             generateClient();
             generateClient();

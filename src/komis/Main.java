@@ -44,15 +44,12 @@ public class Main {
 	Player.player1.playerGarage.get(0).repair(Components.Comps.brakes,Mechanic.Adrian,Player.player1);
 	Player.player1.playerGarage.get(0).carPartsStatus();
 	System.out.println(Player.player1.playerGarage.get(0).gearboxvalue);*/
-    Generate generate=new Generate();
-    generate.createCarBase();
-    generate.createBaseOfClients();
+    Player player1=new Player("Hubert","Marchwat",100000.0);
 	Menu menu=new Menu();
-	menu.createCarBase();
+	menu.generate.createCarBase();
 	menu.generate.createBaseOfClients();
-	//menu.showFirstPage();
 	while (true){
-	    if(!menu.showFirstPage()){
+	    if(!menu.showFirstPage(player1)){
 	        break;
         }
     }
