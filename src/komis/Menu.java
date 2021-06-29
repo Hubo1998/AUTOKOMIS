@@ -1,13 +1,11 @@
 package komis;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Menu {
     public Menu(){
     }
-    Generate generate=new Generate();
     public Scanner scanner=new Scanner(System.in);
     public ArrayList<Player> baseOfPlayers=new ArrayList<>();
     public void startGame(int amount){
@@ -91,18 +89,24 @@ public class Menu {
         System.out.println("Menu:\n1. Pokaż menu główne\n2. Kup samochód\n3. Sprawdź samochód");
         String inputshowcar=scanner.nextLine();
         switch (inputshowcar) {
-            case "1" -> {}
             case "2" -> {
                 System.out.println("Wpisz numer samochodu, który chciałbyś kupić:");
-                String inputbuycar = scanner.nextLine();
-                player.buyCar(player.baseOfCars.get(Integer.parseInt(inputbuycar) - 1));
+                try {
+                    int inputbuycar = inputWithMinusOne();
+                    player.buyCar(player.baseOfCars.get(inputbuycar));
+                }catch (NumberFormatException exception){
+                    System.out.println("Musisz wpisać numer samochodu");
+                }catch (IndexOutOfBoundsException exception){
+                    System.out.println("Samochód spoza zakresu");
+                }
             }
             case "3" -> {
                 System.out.println("Wpisz numer samochodu, który chciałbyś sprawdzić:");
-                String inputcheckcar = scanner.nextLine();
-                System.out.println(player.baseOfCars.get(Integer.parseInt(inputcheckcar)-1).producer+" "+player.baseOfCars.get(Integer.parseInt(inputcheckcar)-1).model);
-                player.baseOfCars.get(Integer.parseInt(inputcheckcar)-1).carPartsStatus();
+                int inputcheckcar = inputWithMinusOne();
+                System.out.println(player.baseOfCars.get(inputcheckcar).producer+" "+player.baseOfCars.get(inputcheckcar).model);
+                player.baseOfCars.get(inputcheckcar).carPartsStatus();
             }
+            default -> {}
         }
     }
     public void checkGarageStatus(Player player){
@@ -114,42 +118,39 @@ public class Menu {
             System.out.println("Menu:\n1. Pokaż menu główne\n2. Sprawdź stan auta\n3. Napraw auto\n4. Sprzedaj auto");
             String inputcheckgarage = scanner.nextLine();
             switch (inputcheckgarage) {
-                case "1" -> showFirstPage(player);
                 case "2" -> {
                     System.out.println("Wpisz numer samochodu,który chcesz sprawdzić");
-                    String inputcheckcar = scanner.nextLine();
-                    System.out.println(player.playerGarage.get(Integer.parseInt(inputcheckcar) - 1).producer + " " + player.playerGarage.get(Integer.parseInt(inputcheckcar) - 1).model);
-                    player.playerGarage.get(Integer.parseInt(inputcheckcar) - 1).carPartsStatus();
+                    int inputcheckcar = inputWithMinusOne();
+                    System.out.println(player.playerGarage.get(inputcheckcar).producer + " " + player.playerGarage.get(inputcheckcar).model);
+                    player.playerGarage.get(inputcheckcar).carPartsStatus();
                     System.out.println("W takim stanie jest Twoje auto");
                 }
                 case "3" -> {
                     System.out.println("Które auto chciałbyś naprawić? Wybierz numer auta.");
-                    String inputcartorepair = scanner.nextLine();
-                    System.out.println(player.playerGarage.get(Integer.parseInt(inputcartorepair) - 1).producer + " " + player.playerGarage.get(Integer.parseInt(inputcartorepair) - 1).model);
-                    player.playerGarage.get(Integer.parseInt(inputcartorepair) - 1).carPartsStatus();
+                    int inputcartorepair= inputWithMinusOne();
+                    System.out.println(player.playerGarage.get(inputcartorepair).producer + " " + player.playerGarage.get(inputcartorepair).model);
+                    player.playerGarage.get(inputcartorepair).carPartsStatus();
                     System.out.println("Który podzespół chciałbyś naprawić?");
                     String inputparttorepair = scanner.nextLine();
                     switch (inputparttorepair) {
-                        case "1" -> Mechanicchoice(Components.Comps.brakes, Integer.parseInt(inputcartorepair) - 1, player);
-                        case "2" -> Mechanicchoice(Components.Comps.suspension, Integer.parseInt(inputcartorepair) - 1, player);
-                        case "3" -> Mechanicchoice(Components.Comps.engine, Integer.parseInt(inputcartorepair) - 1, player);
-                        case "4" -> Mechanicchoice(Components.Comps.body, Integer.parseInt(inputcartorepair) - 1, player);
-                        case "5" -> Mechanicchoice(Components.Comps.gearbox, Integer.parseInt(inputcartorepair) - 1, player);
-                        default -> {
-                            System.out.println("Coś nie teges");
-                            showFirstPage(player);
-                        }
+                        case "1" -> Mechanicchoice(Components.Comps.brakes, inputcartorepair, player);
+                        case "2" -> Mechanicchoice(Components.Comps.suspension, inputcartorepair, player);
+                        case "3" -> Mechanicchoice(Components.Comps.engine, inputcartorepair, player);
+                        case "4" -> Mechanicchoice(Components.Comps.body, inputcartorepair, player);
+                        case "5" -> Mechanicchoice(Components.Comps.gearbox, inputcartorepair, player);
+                        default -> System.out.println("Coś nie teges");
                     }
                 }
                 case "4" -> {
                     System.out.println("Które auto chciałbyś sprzedać?");
-                    String inputcartosell = scanner.nextLine();
-                    System.out.println(player.playerGarage.get(Integer.parseInt(inputcartosell) - 1).producer + " " + player.playerGarage.get(Integer.parseInt(inputcartosell) - 1).model + " za " + Math.round(player.playerGarage.get(Integer.parseInt(inputcartosell) - 1).finalPrice));
+                    int inputcartosell = inputWithMinusOne();
+                    System.out.println(player.playerGarage.get(inputcartosell).producer + " " + player.playerGarage.get(inputcartosell).model + " za " + Math.round(player.playerGarage.get(inputcartosell).finalPrice));
                     System.out.println("Komu chciałbyś sprzedać auto?");
                     player.viewBaseOfClients();
-                    String inputclienttosell = scanner.nextLine();
-                    player.sellInHarmonyWithMoodOfClient(Integer.parseInt(inputcartosell) - 1, player.baseOfClients.get(Integer.parseInt(inputclienttosell) - 1));
+                    int inputclienttosell = inputWithMinusOne();
+                    player.sellInHarmonyWithMoodOfClient(inputcartosell, player.baseOfClients.get(inputclienttosell));
                 }
+                default -> {}
             }
         }
     }
@@ -167,10 +168,7 @@ public class Menu {
                 case "1"->repairTime(Mechanic.Janusz,comps,player.playerGarage.get(cartorepair),player);
                 case "2"->repairTime(Mechanic.Marian,comps,player.playerGarage.get(cartorepair),player);
                 case "3"->repairTime(Mechanic.Adrian,comps,player.playerGarage.get(cartorepair),player);
-                default -> {
-                    System.out.println("Coś nie teges");
-                    showFirstPage(player);
-                }
+                default -> System.out.println("Coś nie teges");
             }
         }
     }
@@ -185,5 +183,10 @@ public class Menu {
         System.out.println("Wybierz reklamę którą chcesz kupić:\n1. Reklama w gazecie\n2. Reklama w internecie");
         String inputAdvertisementchoice=scanner.nextLine();
         player.buyAdvertisement(Integer.parseInt(inputAdvertisementchoice));
+    }
+    public int inputWithMinusOne(){
+        int input;
+        input = Integer.parseInt(scanner.nextLine())-1;
+        return input;
     }
 }
