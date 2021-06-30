@@ -2,7 +2,7 @@ package komis;
 
 import java.util.Random;
 
-public class Components {
+public class Components{
     public boolean brakesAreOk;
     public double brakesvalue;
     final static public Double DEFAULT_BRAKES_VALUE=0.1;

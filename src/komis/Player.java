@@ -1,5 +1,7 @@
 package komis;
 
+import komis.Vehicles.Vehicle;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -7,9 +9,9 @@ public class Player {
     public String firstName;
     public Double finalCash;
     public Double cash;
-    public ArrayList<Car> playerGarage= new ArrayList<>();
+    public ArrayList<Vehicle> playerGarage= new ArrayList<>();
     public ArrayList<String> history=new ArrayList<>();
-    public ArrayList<Car> baseOfCars= new ArrayList<>();
+    public ArrayList<Vehicle> baseOfCars= new ArrayList<>();
     public ArrayList<Client> baseOfClients=new ArrayList<>();
     public int counter;
 
@@ -40,17 +42,17 @@ public class Player {
             System.out.println(i+1+". "+baseOfCars.get(i));
         }
     }
-    public void buyCar(Car car){
-        if(finalCash >(car.price+car.price*0.02)){
+    public void buyCar(Vehicle vehicle){
+        if(finalCash >(vehicle.price+vehicle.price*0.02)){
             for (int i=0;i<baseOfCars.size();i++){
-                if(baseOfCars.get(i)==car){
+                if(baseOfCars.get(i)==vehicle){
                     System.out.println("Kupiłeś "+baseOfCars.get(i).producer+" "+baseOfCars.get(i).model);
-                    Car carholder=baseOfCars.get(i);
+                    Vehicle carholder=baseOfCars.get(i);
                     removeCar(i);
                     playerGarage.add(carholder);
-                    finalCash -=car.price;
-                    System.out.println("Podatek 2% od wartości:"+Math.round(car.price*0.02));
-                    finalCash -=car.price*0.02;
+                    finalCash -=vehicle.price;
+                    System.out.println("Podatek 2% od wartości:"+Math.round(vehicle.price*0.02));
+                    finalCash -=vehicle.price*0.02;
                     counter+=1;
                 }
             }
@@ -62,7 +64,7 @@ public class Player {
             System.out.println("Sprzedałeś " + playerGarage.get(indexofcar).producer + " " + playerGarage.get(indexofcar).model + " za " + Math.round(playerGarage.get(indexofcar).finalPrice));
             finalCash += playerGarage.get(indexofcar).finalPrice;
             client.cash -= playerGarage.get(indexofcar).finalPrice;
-            Car carholder = playerGarage.get(indexofcar);
+            Vehicle carholder = playerGarage.get(indexofcar);
             System.out.println("Pojazd umyto, kwota: "+washprice);
             System.out.println("Podatek 2% od wartości wyniósł:"+Math.round(playerGarage.get(indexofcar).finalPrice*0.02));
             finalCash -=playerGarage.get(indexofcar).finalPrice*0.02;

@@ -1,5 +1,10 @@
 package komis;
 
+import komis.Vehicles.Bus;
+import komis.Vehicles.Car;
+import komis.Vehicles.Moto;
+import komis.Vehicles.Vehicle;
+
 import java.util.Random;
 
 public class Generate {
@@ -10,10 +15,51 @@ public class Generate {
     public int identifier=0;
     public int clientcounter=0;
 
-    public Car generateVehicle(){
+    public Vehicle generateVehicle(){
+        Random rand=new Random();
+        int number =rand.nextInt(100);
+        if(number>90){
+            return generateMoto();
+        }else if(number>70){
+            return generateBus();
+        }else {
+            return generateCar();
+        }
+    }
+
+    public Bus generateBus() {
         Random rand=new Random();
         int x=genProducer();
         //nie wymyśliłem sposobu na generowanie roku, w zależności od modelu i marki, myślę, że już chyba nie ma co przesadzać. Po prostu losuje liczbę od 1990 do 2020 roku.
+        int yearOfProduction=rand.nextInt(30)+DEFAULT_YEAR_STARER;
+        int luggae=rand.nextInt(500)+500;
+        boolean brakes=trueorFalse();
+        boolean suspension=trueorFalse();
+        boolean engine=trueorFalse();
+        boolean body=trueorFalse();
+        boolean gearbox=trueorFalse();
+        Car.Segment segment=genSegment(x);
+        double value=genPrice(segment,yearOfProduction,brakes,suspension,engine,body,gearbox);
+        return new Bus(producers[x],models[genModel(x)],yearOfProduction,segment,value,luggae,new Components(brakes,suspension,engine,body,gearbox));
+    }
+
+    public Moto generateMoto() {
+        Random rand=new Random();
+        int x=genProducer();
+        int yearOfProduction=rand.nextInt(30)+DEFAULT_YEAR_STARER;
+        boolean brakes=trueorFalse();
+        boolean suspension=trueorFalse();
+        boolean engine=trueorFalse();
+        boolean body=trueorFalse();
+        boolean gearbox=trueorFalse();
+        Car.Segment segment=genSegment(x);
+        double value=genPrice(segment,yearOfProduction,brakes,suspension,engine,body,gearbox);
+        return new Moto(producers[x],models[genModel(x)],yearOfProduction,segment,value,new Components(brakes,suspension,engine,body,gearbox));
+    }
+
+    public Car generateCar(){
+        Random rand=new Random();
+        int x=genProducer();
         int yearOfProduction=rand.nextInt(30)+DEFAULT_YEAR_STARER;
         boolean brakes=trueorFalse();
         boolean suspension=trueorFalse();

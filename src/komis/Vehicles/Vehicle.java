@@ -1,12 +1,16 @@
-package komis;
+package komis.Vehicles;
+
+import komis.Components;
+import komis.Mechanic;
+import komis.Player;
 
 import java.util.Random;
 
-public class Car extends Components {
+public abstract class Vehicle extends Components {
     final public String model;
     final public String producer;
     final public Integer yearOfProduction;
-    final public Segment segment;
+    final public Car.Segment segment;
     public Double price;
     public Double finalPrice;
     Random rand = new Random();
@@ -15,7 +19,7 @@ public class Car extends Components {
         Premium, Standard, Budget, NA
     }
 
-    public Car(String producer, String model, Integer yearOfProduction, Segment segment, Double price, Components components) {
+    public Vehicle(String producer, String model, Integer yearOfProduction, Car.Segment segment, Double price, Components components) {
         super(components.brakesAreOk, components.suspensionIsOk, components.engineIsOk, components.bodyIsOk, components.gearboxIsOk);
         this.producer = producer;
         this.model = model;
@@ -24,14 +28,9 @@ public class Car extends Components {
         this.price = price;
         this.finalPrice = price;
     }
-
-    @Override
-    public String toString() {
-        return producer + " " + model + " " + yearOfProduction + " rok za " + Math.round(finalPrice);
-    }
     public void repair(Comps comps, Mechanic steve, Player player) {
         double priceRandomized = rand.nextInt(11) + steve.price;
-        double priceRandomizedextra = rand.nextInt(11) + Mechanic.Janusz.price;
+        double priceRandomizedextra = rand.nextInt(11) + steve.price;
         int halfOfmechanicprice= (int) Math.round(((price * valueOf(comps)) * (priceRandomized / 100)) / 2);
         int januszprice= (int) Math.round((price * valueOf(comps))*(priceRandomizedextra/100));
         int chanceOfSuccess = rand.nextInt(101);
@@ -70,10 +69,8 @@ public class Car extends Components {
         else System.out.println("4. Karoseria NIE OK");
         if(gearboxIsOk) System.out.println("5. Skrzynia biegów OK");
         else System.out.println("5. Skrzynia biegów NIE OK");
-        }
+    }
     public boolean isCarOk(){
         return brakesAreOk & suspensionIsOk & engineIsOk & bodyIsOk & gearboxIsOk;
     }
 }
-
-

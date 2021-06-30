@@ -1,5 +1,7 @@
 package komis;
 
+import komis.Vehicles.Vehicle;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -186,12 +188,12 @@ public class Menu {
             }
         }
     }
-    public void repairTime(Mechanic steve, Components.Comps comps,Car car,Player player){
-        System.out.println(car.producer+" "+car.model+" u Mechanika");
-        car.repair(comps,steve,player);
-        System.out.println(car.producer+" "+car.model);
+    public void repairTime(Mechanic steve, Components.Comps comps, Vehicle vehicle, Player player){
+        System.out.println(vehicle.producer+" "+vehicle.model+" u Mechanika");
+        vehicle.repair(comps,steve,player);
+        System.out.println(vehicle.producer+" "+vehicle.model);
         System.out.println("Aktualny status podzespołów");
-        car.carPartsStatus();
+        vehicle.carPartsStatus();
     }
     public void buyAdvertisement(Player player){
         System.out.println("Wybierz reklamę którą chcesz kupić:\n1. Reklama w gazecie\n2. Reklama w internecie");

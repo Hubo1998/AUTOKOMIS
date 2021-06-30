@@ -1,12 +1,14 @@
 package komis;
 
+import komis.Vehicles.Vehicle;
+
 import java.util.ArrayList;
 
 public class Client {
     public int cash;
     public Mood mood;
     public int ID;
-    public ArrayList<Car> clientgarage=new ArrayList<>();
+    public ArrayList<Vehicle> clientgarage=new ArrayList<>();
     public enum Mood{
         takeeverythingbroken,onlysuspension,takeeverythingok
     }
