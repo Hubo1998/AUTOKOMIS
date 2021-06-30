@@ -14,15 +14,15 @@ public class Moto extends Vehicle {
     }
     @Override
     public void repair(Comps comps, Mechanic steve, Player player) {
-        double priceRandomized = rand.nextInt(11) + steve.price*0.75; //tańsze naprawy moto
+        double priceRandomized = rand.nextInt(11) + steve.price*0.75; //tańsze naprawy moto *0.75
         double priceRandomizedextra = rand.nextInt(11) + Mechanic.Janusz.price*0.75;
-        double halfOfmechanicprice= Math.round(((price * valueOf(comps)) *0.75* (priceRandomized / 100)) / 2);
-        double januszprice= Math.round((price * valueOf(comps))*0.75*(priceRandomizedextra/100));
-        double priceOfWork=(price * valueOf(comps)) *0.75* (priceRandomized / 100);
+        int halfOfmechanicprice= (int) Math.round(((price * valueOf(comps)) *0.75* (priceRandomized / 100)) / 2);
+        int januszprice= (int) Math.round((price * valueOf(comps))*0.75*(priceRandomizedextra/100));
+        double priceOfWholeWork=(price * valueOf(comps)) *0.75* (priceRandomized / 100);
         int chanceOfSuccess = rand.nextInt(101);
         int chanceOfBroke = rand.nextInt(101);
-        if (chanceOfSuccess >= steve.guarantee & player.finalCash - priceOfWork > 0) {
-            System.out.println("Niestety Twój mechanik nie podołał, jedynym ratunkiem jest Janusz\njednemu musisz zapłacić połowę stawki:"+halfOfmechanicprice+" a dodatkowo Januszowi:"+januszprice);
+        if (chanceOfSuccess >= steve.guarantee & player.finalCash - priceOfWholeWork > 0) {
+            System.out.println("Niestety Twój mechanik nie podołał, jedynym ratunkiem jest Janusz\njednemu musisz zapłacić połowę stawki: "+halfOfmechanicprice+" a dodatkowo Januszowi: "+januszprice);
             player.finalCash -= halfOfmechanicprice;
             player.finalCash -= januszprice;
             setService(comps,true);
@@ -32,8 +32,8 @@ public class Moto extends Vehicle {
                 System.out.println("Jakby tego było mało, Twój mechanik zepsuł coś jeszcze, trzeba będzie to naprawić :S");
                 breakSomething();
             }
-        } else if (player.finalCash - priceOfWork > 0) {
-            player.finalCash -= priceOfWork;
+        } else if (player.finalCash - priceOfWholeWork > 0) {
+            player.finalCash -= priceOfWholeWork;
             finalPrice += (price * valueOf(comps));
             setService(comps,true);
             System.out.println(nameOfComp(comps) + " naprawione, cena za usługę:" + Math.round(price * valueOf(comps) * (priceRandomized / 100)));

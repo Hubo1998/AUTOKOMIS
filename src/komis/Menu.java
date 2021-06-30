@@ -11,25 +11,20 @@ public class Menu {
     }
     public Scanner scanner=new Scanner(System.in);
     public ArrayList<Player> baseOfPlayers=new ArrayList<>();
+    Generate generate=new Generate();
     public void startGame(int amount){
         //szybkie startery do testów.
         if (amount==22){
+            generate.createCarBase();
+            generate.createBaseOfClients();
             baseOfPlayers.add(new Player("firstPlayer",100000.0));
-            baseOfPlayers.get(0).createCarBase();
-            baseOfPlayers.get(0).createBaseOfClients();
             baseOfPlayers.add(new Player("secondPlayer",100000.0));
-            baseOfPlayers.get(1).createCarBase();
-            baseOfPlayers.get(1).createBaseOfClients();
         } else if(amount==33){
+            generate.createCarBase();
+            generate.createBaseOfClients();
             baseOfPlayers.add(new Player("firstPlayer",100000.0));
-            baseOfPlayers.get(0).createCarBase();
-            baseOfPlayers.get(0).createBaseOfClients();
             baseOfPlayers.add(new Player("secondPlayer",100000.0));
-            baseOfPlayers.get(1).createCarBase();
-            baseOfPlayers.get(1).createBaseOfClients();
             baseOfPlayers.add(new Player("thirdPlayer",100000.0));
-            baseOfPlayers.get(2).createCarBase();
-            baseOfPlayers.get(2).createBaseOfClients();
         }else{
             System.out.println("Wprowadź kwotę pieniędzy dla wszystkich graczy na początek.");
             String cash=scanner.nextLine();
@@ -37,8 +32,8 @@ public class Menu {
                 System.out.println("Imię gracza nr "+(i+1));
                 String firstName=scanner.nextLine();
                 baseOfPlayers.add(new Player(firstName,Double.valueOf(cash)));
-                baseOfPlayers.get(i).createCarBase();
-                baseOfPlayers.get(i).createBaseOfClients();
+                generate.createCarBase();
+                generate.createBaseOfClients();
             }
         }
     }
@@ -55,7 +50,7 @@ public class Menu {
             switch (inputfirstpage) {
                 case "1" -> showCarBase(player);
                 case "2" -> checkGarageStatus(player);
-                case "3" -> player.viewBaseOfClients();
+                case "3" -> generate.viewBaseOfClients();
                 case "4" -> buyAdvertisement(player);
                 case "5" -> player.checkCash();
                 case "6" -> player.showHistory();
@@ -72,15 +67,16 @@ public class Menu {
     }
     public void showCarBase(Player player){
         System.out.println("To są samochody które możesz kupić:");
-        player.viewCarBase();
+        generate.viewCarBase();
         System.out.println("Menu:\n1. Pokaż menu główne\n2. Kup samochód\n3. Sprawdź samochód");
         String inputshowcar=scanner.nextLine();
         switch (inputshowcar) {
+            case "1"->{}
             case "2" -> {
                 System.out.println("Wpisz numer samochodu, który chciałbyś kupić:");
                 try {
                     int inputbuycar = inputWithMinusOne();
-                    player.buyCar(player.baseOfCars.get(inputbuycar));
+                    generate.buyCar(generate.baseOfCars.get(inputbuycar),player);
                 }catch (NumberFormatException exception){
                     System.out.println("Musisz wpisać numer samochodu");
                 }catch (IndexOutOfBoundsException exception){
@@ -91,8 +87,8 @@ public class Menu {
                 System.out.println("Wpisz numer samochodu, który chciałbyś sprawdzić:");
                 try{
                     int inputcheckcar = inputWithMinusOne();
-                    System.out.println(player.baseOfCars.get(inputcheckcar).producer + " " + player.baseOfCars.get(inputcheckcar).model);
-                    player.baseOfCars.get(inputcheckcar).carPartsStatus();
+                    System.out.println(generate.baseOfCars.get(inputcheckcar).producer + " " + generate.baseOfCars.get(inputcheckcar).model);
+                    generate.baseOfCars.get(inputcheckcar).carPartsStatus();
                 }catch (NumberFormatException exception){
                     System.out.println("Musisz wpisać numer samochodu");
                 }catch (IndexOutOfBoundsException exception){
@@ -111,6 +107,7 @@ public class Menu {
             System.out.println("Menu:\n1. Pokaż menu główne\n2. Sprawdź stan auta\n3. Napraw auto\n4. Sprzedaj auto");
             String inputcheckgarage = scanner.nextLine();
             switch (inputcheckgarage) {
+                case "1"->{}
                 case "2" -> {
                     System.out.println("Wpisz numer samochodu,który chcesz sprawdzić");
                     try{
@@ -128,7 +125,7 @@ public class Menu {
                     System.out.println("Które auto chciałbyś naprawić? Wybierz numer auta.");
                     try{
                         int inputcartorepair = inputWithMinusOne();
-                        System.out.println(player.playerGarage.get(inputcartorepair).producer + " " + player.playerGarage.get(inputcartorepair).model);
+                        System.out.println(player.playerGarage.get(inputcartorepair));
                         player.playerGarage.get(inputcartorepair).carPartsStatus();
                         System.out.println("Który podzespół chciałbyś naprawić?");
                         String inputparttorepair = scanner.nextLine();
@@ -152,9 +149,9 @@ public class Menu {
                         int inputcartosell = inputWithMinusOne();
                         System.out.println(player.playerGarage.get(inputcartosell).producer + " " + player.playerGarage.get(inputcartosell).model + " za " + Math.round(player.playerGarage.get(inputcartosell).finalPrice));
                         System.out.println("Komu chciałbyś sprzedać auto?");
-                        player.viewBaseOfClients();
+                        generate.viewBaseOfClients();
                         int inputclienttosell = inputWithMinusOne();
-                        player.sellInHarmonyWithMoodOfClient(inputcartosell, player.baseOfClients.get(inputclienttosell));
+                        generate.sellInHarmonyWithMoodOfClient(inputcartosell, generate.baseOfClients.get(inputclienttosell),player);
                     }catch (NumberFormatException exception){
                         System.out.println("Musisz wpisać numer");
                     }catch (IndexOutOfBoundsException exception){
@@ -218,7 +215,7 @@ public class Menu {
     public void buyAdvertisement(Player player){
         System.out.println("Wybierz reklamę którą chcesz kupić:\n1. Reklama w gazecie\n2. Reklama w internecie");
         String inputAdvertisementchoice=scanner.nextLine();
-        player.buyAdvertisement(Integer.parseInt(inputAdvertisementchoice));
+        generate.buyAdvertisement(Integer.parseInt(inputAdvertisementchoice),player);
     }
     public int inputWithMinusOne(){
         int input;
