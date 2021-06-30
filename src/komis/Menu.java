@@ -1,5 +1,6 @@
 package komis;
 
+import komis.Vehicles.Moto;
 import komis.Vehicles.Vehicle;
 
 import java.util.ArrayList;
@@ -167,7 +168,26 @@ public class Menu {
     public void Mechanicchoice(Components.Comps comps,Integer cartorepair,Player player){
         if(player.playerGarage.get(cartorepair).isCompOk(comps)){
             System.out.println(player.playerGarage.get(cartorepair).nameOfComp(comps)+" są sprawne");
-        }else{
+        }else if(isVehicleMoto(player.playerGarage.get(cartorepair))){
+            System.out.println("U którego mechanika chciałbyś naprawić motocykl?");
+            System.out.println(player.playerGarage.get(cartorepair).nameOfComp(comps)+" cena u Janusza ("+Mechanic.Janusz.guarantee+"% gwarancji, że się uda, "+Mechanic.Janusz.brokelse+"% szans na zepsucie czegoś innego cena między "+Math.round(player.playerGarage.get(cartorepair).price*player.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Janusz.price*0.01*0.75)+" - "+Math.round(player.playerGarage.get(cartorepair).price*player.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Janusz.price+10)*0.01*0.75));
+            System.out.println(player.playerGarage.get(cartorepair).nameOfComp(comps)+" cena u Mariana ("+Mechanic.Marian.guarantee+"% gwarancji, że się uda, "+Mechanic.Marian.brokelse+"% szans na zepsucie czegoś innego cena między "+Math.round(player.playerGarage.get(cartorepair).price*player.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Marian.price*0.01*0.75)+" - "+Math.round(player.playerGarage.get(cartorepair).price*player.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Marian.price+10)*0.01*0.75));
+            System.out.println(player.playerGarage.get(cartorepair).nameOfComp(comps)+" cena u Adriana ("+Mechanic.Adrian.guarantee+"% gwarancji, że się uda, "+Mechanic.Adrian.brokelse+"% szans na zepsucie czegoś innego cena między "+Math.round(player.playerGarage.get(cartorepair).price*player.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Adrian.price*0.01*0.75)+" - "+Math.round(player.playerGarage.get(cartorepair).price*player.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Adrian.price+10)*0.01*0.75));
+            System.out.println("Przemyśl to dobrze, jak się nie uda, trzeba będzie jechać do Janusza");
+            try{
+                String inputmechanicchoice = scanner.nextLine();
+                switch (inputmechanicchoice) {
+                    case "1" -> repairTime(Mechanic.Janusz, comps, player.playerGarage.get(cartorepair), player);
+                    case "2" -> repairTime(Mechanic.Marian, comps, player.playerGarage.get(cartorepair), player);
+                    case "3" -> repairTime(Mechanic.Adrian, comps, player.playerGarage.get(cartorepair), player);
+                    default -> System.out.println("Coś nie teges");
+                }
+            }catch (NumberFormatException exception){
+                System.out.println("Musisz wpisać numer pojazdu");
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Samochód spoza zakresu");
+            }
+        }else {
             System.out.println("U którego mechanika chciałbyś naprawić auto?");
             System.out.println(player.playerGarage.get(cartorepair).nameOfComp(comps)+" cena u Janusza ("+Mechanic.Janusz.guarantee+"% gwarancji, że się uda, "+Mechanic.Janusz.brokelse+"% szans na zepsucie czegoś innego cena między "+Math.round(player.playerGarage.get(cartorepair).price*player.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Janusz.price*0.01)+" - "+Math.round(player.playerGarage.get(cartorepair).price*player.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Janusz.price+10)*0.01));
             System.out.println(player.playerGarage.get(cartorepair).nameOfComp(comps)+" cena u Mariana ("+Mechanic.Marian.guarantee+"% gwarancji, że się uda, "+Mechanic.Marian.brokelse+"% szans na zepsucie czegoś innego cena między "+Math.round(player.playerGarage.get(cartorepair).price*player.playerGarage.get(cartorepair).valueOf(comps)*Mechanic.Marian.price*0.01)+" - "+Math.round(player.playerGarage.get(cartorepair).price*player.playerGarage.get(cartorepair).valueOf(comps)*(Mechanic.Marian.price+10)*0.01));
@@ -182,7 +202,7 @@ public class Menu {
                     default -> System.out.println("Coś nie teges");
                 }
             }catch (NumberFormatException exception){
-                System.out.println("Musisz wpisać numer samochodu");
+                System.out.println("Musisz wpisać numer pojazdu");
             }catch (IndexOutOfBoundsException exception){
                 System.out.println("Samochód spoza zakresu");
             }
@@ -204,5 +224,8 @@ public class Menu {
         int input;
         input = Integer.parseInt(scanner.nextLine())-1;
         return input;
+    }
+    public boolean isVehicleMoto(Vehicle vehicle){
+        return vehicle.getClass() == Moto.class;
     }
 }

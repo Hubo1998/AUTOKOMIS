@@ -56,7 +56,7 @@ public class Player {
                     counter+=1;
                 }
             }
-        }
+        }else System.out.println("Nie stać Cię na ten pojazd");
     }
     public void sellCar(Integer indexofcar,Client client){
         int washprice=250;
