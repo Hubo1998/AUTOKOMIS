@@ -5,6 +5,7 @@ import komis.Vehicles.Car;
 import komis.Vehicles.Moto;
 import komis.Vehicles.Vehicle;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Generate {
@@ -14,7 +15,34 @@ public class Generate {
     public final static Integer DEFAULT_YEAR_STARER=1990;
     public int identifier=0;
     public int clientcounter=0;
+    public ArrayList<Vehicle> baseOfCars= new ArrayList<>();
+    public ArrayList<Client> baseOfClients=new ArrayList<>();
 
+    public void createCarBase(){
+        for (int i=0;i<20;i++){
+            baseOfCars.add(generateVehicle());
+        }
+    }
+    public void viewCarBase(){
+        for(int i=0;i<baseOfCars.size();i++){
+            System.out.println(i+1+". "+baseOfCars.get(i));
+        }
+    }
+    public void removeCar(int indexOfCar){
+        baseOfCars.remove(indexOfCar);
+        baseOfCars.add(generateVehicle());
+    }
+    public void createBaseOfClients(){
+        for (int i=0;i<5;i++){
+            baseOfClients.add(generateClient());
+        }
+    }
+    public void viewBaseOfClients(){
+        System.out.println("Baza potencjalnych klientów:");
+        for(int i=0;i<baseOfClients.size();i++){
+            System.out.println(i+1+". "+baseOfClients.get(i));
+        }
+    }
     public Vehicle generateVehicle(){
         Random rand=new Random();
         int number =rand.nextInt(100);
@@ -216,5 +244,75 @@ public class Generate {
     }
     public int genID(){
         return identifier+=1;
+    }
+    public void buyCar(Vehicle vehicle,Player player){
+        if(player.finalCash >(vehicle.price+vehicle.price*0.02)){
+            for (int i=0;i<baseOfCars.size();i++){
+                if(baseOfCars.get(i)==vehicle) {
+                    System.out.println("Kupiłeś " + baseOfCars.get(i).producer + " " + baseOfCars.get(i).model);
+                    Vehicle carholder = baseOfCars.get(i);
+                    removeCar(i);
+                    player.playerGarage.add(carholder);
+                    player.finalCash -= vehicle.price;
+                    System.out.println("Podatek 2% od wartości:" + Math.round(vehicle.price * 0.02));
+                    player.finalCash -= vehicle.price * 0.02;
+                    player.counter += 1;
+                }
+            }
+        }else System.out.println("Nie stać Cię na ten pojazd");
+    }
+    public void sellCar(Integer indexofcar,Client client,Player player){
+        int washprice=250;
+        if(client.cash>player.playerGarage.get(indexofcar).finalPrice) {
+            System.out.println("Sprzedałeś " + player.playerGarage.get(indexofcar).producer + " " + player.playerGarage.get(indexofcar).model + " za " + Math.round(player.playerGarage.get(indexofcar).finalPrice));
+            player.finalCash += player.playerGarage.get(indexofcar).finalPrice;
+            client.cash -= player.playerGarage.get(indexofcar).finalPrice;
+            Vehicle carholder = player.playerGarage.get(indexofcar);
+            System.out.println("Pojazd umyto, kwota: "+washprice);
+            System.out.println("Podatek 2% od wartości wyniósł:"+Math.round(player.playerGarage.get(indexofcar).finalPrice*0.02));
+            player.finalCash -=player.playerGarage.get(indexofcar).finalPrice*0.02;
+            player.finalCash -=washprice;
+            player.playerGarage.remove(player.playerGarage.get(indexofcar));
+            client.clientgarage.add(carholder);
+            generateClient();
+            generateClient();
+            player.counter=+1;
+            player.history.add("Klient numer "+client.ID+" kupił samochód od "+player.firstName);
+        }else{
+            System.out.println("Twojego klienta nie stać na ten samochód, poszukaj innego.");
+        }
+    }
+    public void sellInHarmonyWithMoodOfClient(Integer indexofcar, Client client,Player player){
+        if(client.mood== Client.Mood.takeeverythingok){
+            if(player.playerGarage.get(indexofcar).isCarOk()) sellCar(indexofcar, client,player);
+            else System.out.println("Nie ta klientela");
+        }else if (client.mood== Client.Mood.onlysuspension){
+            if((player.playerGarage.get(indexofcar).isCarOk())||(!player.playerGarage.get(indexofcar).suspensionIsOk)) sellCar(indexofcar, client,player);
+            else System.out.println("Ten klient nie kupi takiego samochodu");
+        }else if(client.mood==Client.Mood.takeeverythingbroken) sellCar(indexofcar, client,player);
+        else System.out.println("Coś poszło nie tak");
+    }
+    public void buyAdvertisement(int choice,Player player){
+        Random rand=new Random();
+        int newspaperprice=1000;
+        int internetprice=250;
+        int counterOfClients=0;
+        switch(choice){
+            case 1->{
+                player.finalCash -=newspaperprice;
+                for (int i=0;i<rand.nextInt(5);i++) {
+                    baseOfClients.add(generateClient());
+                    counterOfClients+=1;
+                }
+                System.out.println("Zapłaciłeś: "+newspaperprice+"\nPrzybyło "+counterOfClients+" nowych klientów");
+                player.counter+=1;
+            }
+            case 2->{
+                player.finalCash -=internetprice;
+                baseOfClients.add(generateClient());
+                System.out.println("Zapłaciłeś: "+internetprice+"\nPrzybył jeden nowy klient");
+                player.counter+=1;
+            }
+        }
     }
 }
