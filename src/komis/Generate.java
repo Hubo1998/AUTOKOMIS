@@ -263,7 +263,7 @@ public class Generate {
     }
     public void sellCar(Integer indexofcar,Client client,Player player){
         int washprice=250;
-        if(client.cash>player.playerGarage.get(indexofcar).finalPrice) {
+        if(client.cash>player.playerGarage.get(indexofcar).finalPrice&&(client.interests.get(0).equals(player.playerGarage.get(indexofcar).producer) || client.interests.get(1).equals(player.playerGarage.get(indexofcar).producer))) {
             System.out.println("Sprzedałeś " + player.playerGarage.get(indexofcar).producer + " " + player.playerGarage.get(indexofcar).model + " za " + Math.round(player.playerGarage.get(indexofcar).finalPrice));
             player.finalCash += player.playerGarage.get(indexofcar).finalPrice;
             client.cash -= player.playerGarage.get(indexofcar).finalPrice;
@@ -279,7 +279,7 @@ public class Generate {
             player.counter=+1;
             player.history.add("Klient numer "+client.ID+" kupił samochód od "+player.firstName);
         }else{
-            System.out.println("Twojego klienta nie stać na ten samochód, poszukaj innego.");
+            System.out.println("Twój klient nie spełnia Twoich wymagań.");
         }
     }
     public void sellInHarmonyWithMoodOfClient(Integer indexofcar, Client client,Player player){
